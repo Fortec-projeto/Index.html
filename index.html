@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaPet - Seu pet é o reflexo da sua saúde</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TELA INICIAL -->
+    <section id="telaInicio" class="tela ativa">
+        <div class="logo">Vita<span>Pet</span></div>
+
+        <div class="inicio-card">
+            <div class="pet pet-grande">
+                <div class="orelha esquerda"></div>
+                <div class="orelha direita"></div>
+                <div class="olho olho-esq"></div>
+                <div class="olho olho-dir"></div>
+                <div class="boca"></div>
+                <div class="bochecha esq"></div>
+                <div class="bochecha dir"></div>
+            </div>
+
+            <h1>VitaPet</h1>
+            <p>Seu pet é o reflexo da sua saúde.</p>
+
+            <button class="btn-principal" onclick="mostrarTela('telaCriador')">
+                COMEÇAR
+            </button>
+        </div>
+    </section>
+
+
+    <!-- CRIADOR DE PET -->
+    <section id="telaCriador" class="tela">
+        <div class="container pequeno">
+
+            <h1>Crie seu VitaPet</h1>
+            <p>Escolha um nome para seu novo companheiro.</p>
+
+            <div class="pet pet-medio">
+                <div class="orelha esquerda"></div>
+                <div class="orelha direita"></div>
+                <div class="olho olho-esq"></div>
+                <div class="olho olho-dir"></div>
+                <div class="boca"></div>
+                <div class="bochecha esq"></div>
+                <div class="bochecha dir"></div>
+            </div>
+
+            <input type="text" id="nomePet" placeholder="Nome do seu pet">
+
+            <button class="btn-principal" onclick="criarPet()">
+                CRIAR PET
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- TELA PRINCIPAL -->
+    <section id="telaPrincipal" class="tela">
+
+        <header>
+            <div class="logo pequeno-logo">Vita<span>Pet</span></div>
+
+            <div class="recursos">
+                <span>⚡ <b id="bioenergia">100</b></span>
+                <span>⭐ <b id="biopontos">0</b></span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+
+            <div class="boas-vindas">
+                <h1>Olá, <span id="nomePetTela">Pet</span>!</h1>
+                <p>Cuide dos seus hábitos para manter seu pet saudável.</p>
+            </div>
+
+            <div class="pet-area">
+                <div id="petPrincipal" class="pet pet-grande">
+
+                    <div class="orelha esquerda"></div>
+                    <div class="orelha direita"></div>
+                    <div class="olho olho-esq"></div>
+                    <div class="olho olho-dir"></div>
+                    <div class="boca"></div>
+                    <div class="bochecha esq"></div>
+                    <div class="bochecha dir"></div>
+
+                </div>
+
+                <div id="mensagemPet" class="fala">
+                    Estou pronto para cuidar da sua saúde!
+                </div>
+            </div>
+
+
+            <!-- STATUS -->
+            <div class="status-card">
+
+                <h2>Status do Pet</h2>
+
+                <div class="status-item">
+                    <div>
+                        <span>❤️ Saúde</span>
+                        <b id="saudeValor">100</b>
+                    </div>
+                    <div class="barra">
+                        <div id="saudeBarra" class="barra-preenchida"></div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div>
+                        <span>💧 Hidratação</span>
+                        <b id="hidratacaoValor">100</b>
+                    </div>
+                    <div class="barra">
+                        <div id="hidratacaoBarra" class="barra-preenchida"></div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div>
+                        <span>⚡ Energia</span>
+                        <b id="energiaValor">100</b>
+                    </div>
+                    <div class="barra">
+                        <div id="energiaBarra" class="barra-preenchida"></div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div>
+                        <span>😊 Felicidade</span>
+                        <b id="felicidadeValor">100</b>
+                    </div>
+                    <div class="barra">
+                        <div id="felicidadeBarra" class="barra-preenchida"></div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div>
+                        <span>🧠 Saúde Mental</span>
+                        <b id="mentalValor">100</b>
+                    </div>
+                    <div class="barra">
+                        <div id="mentalBarra" class="barra-preenchida"></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- AÇÕES -->
+            <div class="acoes">
+
+                <button onclick="beberAgua()">
+                    💧
+                    <span>Beber Água</span>
+                </button>
+
+                <button onclick="dormir()">
+                    😴
+                    <span>Dormir</span>
+                </button>
+
+                <button onclick="exercicio()">
+                    🏃
+                    <span>Exercício</span>
+                </button>
+
+                <button onclick="alimentacao()">
+                    🥗
+                    <span>Alimentação</span>
+                </button>
+
+                <button onclick="pausaAtiva()">
+                    🧘
+                    <span>Pausa Ativa</span>
+                </button>
+
+            </div>
+
+
+            <!-- MENU -->
+            <div class="menu">
+
+                <button onclick="mostrarTela('telaRegistro')">
+                    📋
+                    <span>Hábitos</span>
+                </button>
+
+                <button onclick="mostrarTela('telaLoja')">
+                    🛍️
+                    <span>Loja</span>
+                </button>
+
+                <button onclick="mostrarTela('telaEvolucao')">
+                    🏆
+                    <span>Evolução</span>
+                </button>
+
+                <button onclick="mostrarTela('telaEstatisticas')">
+                    📊
+                    <span>Estatísticas</span>
+                </button>
+
+                <button onclick="mostrarTela('telaRanking')">
+                    👥
+                    <span>Ranking</span>
+                </button>
+
+            </div>
+
+        </main>
+    </section>
+
+
+    <!-- REGISTRO DE HÁBITOS -->
+    <section id="telaRegistro" class="tela">
+
+        <div class="container">
+
+            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+                ← Voltar
+            </button>
+
+            <h1>Registro de Hábitos</h1>
+            <p>Registre suas atividades saudáveis.</p>
+
+            <div class="lista-habitos">
+
+                <div class="habito">
+                    <span>💧 Bebi água adequadamente</span>
+                    <button onclick="beberAgua()">+10</button>
+                </div>
+
+                <div class="habito">
+                    <span>😴 Dormi pelo menos 8 horas</span>
+                    <button onclick="dormir()">+30</button>
+                </div>
+
+                <div class="habito">
+                    <span>🏃 Pratiquei atividade física</span>
+                    <button onclick="exercicio()">+25</button>
+                </div>
+
+                <div class="habito">
+                    <span>🥗 Tive uma alimentação saudável</span>
+                    <button onclick="alimentacao()">+20</button>
+                </div>
+
+                <div class="habito">
+                    <span>🧘 Fiz uma pausa ativa</span>
+                    <button onclick="pausaAtiva()">+15</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOJA -->
+    <section id="telaLoja" class="tela">
+
+        <div class="container">
+
+            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+                ← Voltar
+            </button>
+
+            <h1>🛍️ Loja VitaPet</h1>
+            <p>Use seus BioPontos para personalizar seu pet.</p>
+
+            <div class="loja">
+
+                <div class="produto">
+                    <div class="produto-imagem">🎩</div>
+                    <h3>Chapéu</h3>
+                    <p>50 BioPontos</p>
+                    <button onclick="comprarItem('Chapéu', 50)">Comprar</button>
+                </div>
+
+                <div class="produto">
+                    <div class="produto-imagem">👓</div>
+                    <h3>Óculos</h3>
+                    <p>75 BioPontos</p>
+                    <button onclick="comprarItem('Óculos', 75)">Comprar</button>
+                </div>
+
+                <div class="produto">
+                    <div class="produto-imagem">🎒</div>
+                    <h3>Mochila</h3>
+                    <p>100 BioPontos</p>
+                    <button onclick="comprarItem('Mochila', 100)">Comprar</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EVOLUÇÃO -->
+    <section id="telaEvolucao" class="tela">
+
+        <div class="container">
+
+            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+                ← Voltar
+            </button>
+
+            <h1>🏆 Evolução</h1>
+
+            <div class="evolucao-card">
+
+                <div class="pet pet-medio">
+                    <div class="orelha esquerda"></div>
+                    <div class="orelha direita"></div>
+                    <div class="olho olho-esq"></div>
+                    <div class="olho olho-dir"></div>
+                    <div class="boca"></div>
+                    <div class="bochecha esq"></div>
+                    <div class="bochecha dir"></div>
+                </div>
+
+                <h2 id="nivelPet">Nível 1</h2>
+
+                <p id="xpTexto">0 / 100 BioPontos</p>
+
+                <div class="xp-barra">
+                    <div id="xpPreenchido"></div>
+                </div>
+
+                <p>
+                    Continue praticando hábitos saudáveis
+                    para evoluir seu VitaPet!
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ESTATÍSTICAS -->
+    <section id="telaEstatisticas" class="tela">
+
+        <div class="container">
+
+            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+                ← Voltar
+            </button>
+
+            <h1>📊 Estatísticas</h1>
+
+            <div class="estatisticas">
+
+                <div class="estatistica">
+                    <strong id="aguaTotal">0</strong>
+                    <span>Copos de água</span>
+                </div>
+
+                <div class="estatistica">
+                    <strong id="exercicioTotal">0</strong>
+                    <span>Exercícios</span>
+                </div>
+
+                <div class="estatistica">
+                    <strong id="alimentacaoTotal">0</strong>
+                    <span>Alimentações saudáveis</span>
+                </div>
+
+                <div class="estatistica">
+                    <strong id="pausaTotal">0</strong>
+                    <span>Pausas ativas</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RANKING -->
+    <section id="telaRanking" class="tela">
+
+        <div class="container">
+
+            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+                ← Voltar
+            </button>
+
+            <h1>👥 Ranking VitaPet</h1>
+            <p>Veja como você está evoluindo.</p>
+
+            <div class="ranking">
+
+                <div class="ranking-item primeiro">
+                    <span>🥇</span>
+                    <b>Você</b>
+                    <strong id="rankingPontos">0 pts</strong>
+                </div>
+
+                <div class="ranking-item">
+                    <span>🥈</span>
+                    <b>Lucas</b>
+                    <strong>420 pts</strong>
+                </div>
+
+                <div class="ranking-item">
+                    <span>🥉</span>
+                    <b>Mariana</b>
+                    <strong>380 pts</strong>
+                </div>
+
+                <div class="ranking-item">
+                    <span>4º</span>
+                    <b>Gabriel</b>
+                    <strong>310 pts</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div id="notificacao" class="notificacao"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
