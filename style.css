@@ -1,0 +1,616 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eefaf7;
+    color: #183b36;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+.tela {
+    display: none;
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+
+/* LOGO */
+
+.logo {
+    font-size: 48px;
+    font-weight: 900;
+    color: #164e63;
+}
+
+.logo span {
+    color: #20a87a;
+}
+
+
+/* TELA INICIAL */
+
+#telaInicio {
+    background: linear-gradient(135deg, #d9fff4, #eefaf7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#telaInicio.ativa {
+    display: flex;
+}
+
+.inicio-card {
+    text-align: center;
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px 25px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.inicio-card h1 {
+    font-size: 42px;
+    margin: 15px 0 5px;
+}
+
+.inicio-card p {
+    color: #66807a;
+    margin-bottom: 25px;
+}
+
+
+/* BOTÕES */
+
+.btn-principal {
+    background: #20a87a;
+    color: white;
+    padding: 15px 35px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-principal:hover {
+    transform: translateY(-2px);
+    background: #168b64;
+}
+
+.btn-voltar {
+    background: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    color: #164e63;
+    font-weight: bold;
+}
+
+
+/* CONTAINER */
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.container.pequeno {
+    max-width: 500px;
+    text-align: center;
+}
+
+.container h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+}
+
+.container > p {
+    color: #66807a;
+    margin-bottom: 30px;
+}
+
+
+/* INPUT */
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #d5ebe5;
+    border-radius: 12px;
+    margin: 20px 0;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #20a87a;
+}
+
+
+/* PET */
+
+.pet {
+    position: relative;
+    margin: auto;
+    background: #8bd8c1;
+    border: 5px solid #286c5a;
+    border-radius: 48% 48% 45% 45%;
+    box-shadow: 0 10px 0 rgba(0,0,0,0.08);
+}
+
+.pet-grande {
+    width: 210px;
+    height: 210px;
+}
+
+.pet-medio {
+    width: 160px;
+    height: 160px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.orelha {
+    position: absolute;
+    width: 65px;
+    height: 80px;
+    background: #72c9ae;
+    border: 5px solid #286c5a;
+    top: -35px;
+    border-radius: 50%;
+}
+
+.orelha.esquerda {
+    left: 5px;
+    transform: rotate(-25deg);
+}
+
+.orelha.direita {
+    right: 5px;
+    transform: rotate(25deg);
+}
+
+.olho {
+    position: absolute;
+    width: 22px;
+    height: 30px;
+    background: #183b36;
+    border-radius: 50%;
+    top: 75px;
+}
+
+.olho-esq {
+    left: 55px;
+}
+
+.olho-dir {
+    right: 55px;
+}
+
+.boca {
+    position: absolute;
+    width: 35px;
+    height: 18px;
+    border-bottom: 5px solid #183b36;
+    border-radius: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 115px;
+}
+
+.bochecha {
+    position: absolute;
+    width: 25px;
+    height: 12px;
+    background: #f2a6a6;
+    border-radius: 50%;
+    top: 115px;
+}
+
+.bochecha.esq {
+    left: 25px;
+}
+
+.bochecha.dir {
+    right: 25px;
+}
+
+
+/* CABEÇALHO */
+
+header {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.pequeno-logo {
+    font-size: 30px;
+}
+
+.recursos {
+    display: flex;
+    gap: 15px;
+}
+
+.recursos span {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+
+/* DASHBOARD */
+
+.dashboard {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.boas-vindas {
+    margin-bottom: 20px;
+}
+
+.boas-vindas h1 {
+    font-size: 30px;
+}
+
+.boas-vindas span {
+    color: #20a87a;
+}
+
+.boas-vindas p {
+    color: #66807a;
+    margin-top: 5px;
+}
+
+
+/* ÁREA DO PET */
+
+.pet-area {
+    text-align: center;
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.fala {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: #e7f8f2;
+    border-radius: 15px;
+    color: #286c5a;
+}
+
+
+/* STATUS */
+
+.status-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.status-card h2 {
+    margin-bottom: 20px;
+}
+
+.status-item {
+    margin-bottom: 15px;
+}
+
+.status-item > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.barra {
+    width: 100%;
+    height: 12px;
+    background: #e6efed;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.barra-preenchida {
+    height: 100%;
+    width: 100%;
+    background: #20a87a;
+    border-radius: 20px;
+    transition: width 0.3s;
+}
+
+
+/* AÇÕES */
+
+.acoes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.acoes button {
+    background: white;
+    border-radius: 15px;
+    padding: 18px 10px;
+    color: #183b36;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.acoes button:hover {
+    transform: translateY(-3px);
+}
+
+.acoes button:first-letter {
+    font-size: 25px;
+}
+
+.acoes span {
+    display: block;
+    margin-top: 7px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* MENU */
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.menu button {
+    background: #164e63;
+    color: white;
+    padding: 15px 5px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.menu button span {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+/* HÁBITOS */
+
+.lista-habitos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.habito {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+}
+
+.habito button,
+.produto button {
+    background: #20a87a;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+
+/* LOJA */
+
+.loja {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.produto {
+    background: white;
+    text-align: center;
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.produto-imagem {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.produto h3 {
+    margin-bottom: 8px;
+}
+
+.produto p {
+    color: #66807a;
+    margin-bottom: 15px;
+}
+
+
+/* EVOLUÇÃO */
+
+.evolucao-card {
+    background: white;
+    text-align: center;
+    padding: 35px;
+    border-radius: 25px;
+}
+
+.evolucao-card h2 {
+    margin-top: 15px;
+}
+
+.xp-barra {
+    max-width: 500px;
+    height: 18px;
+    background: #e6efed;
+    border-radius: 20px;
+    margin: 15px auto;
+    overflow: hidden;
+}
+
+#xpPreenchido {
+    width: 0%;
+    height: 100%;
+    background: #20a87a;
+    transition: 0.4s;
+}
+
+
+/* ESTATÍSTICAS */
+
+.estatisticas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.estatistica {
+    background: white;
+    padding: 30px 15px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.estatistica strong {
+    display: block;
+    font-size: 35px;
+    color: #20a87a;
+    margin-bottom: 8px;
+}
+
+.estatistica span {
+    color: #66807a;
+}
+
+
+/* RANKING */
+
+.ranking {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ranking-item {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    align-items: center;
+}
+
+.ranking-item strong {
+    text-align: right;
+}
+
+.primeiro {
+    border: 2px solid #20a87a;
+}
+
+
+/* NOTIFICAÇÃO */
+
+.notificacao {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #164e63;
+    color: white;
+    padding: 15px 22px;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.notificacao.mostrar {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ANIMAÇÃO */
+
+.pet-area .pet {
+    animation: flutuar 2s infinite ease-in-out;
+}
+
+@keyframes flutuar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    .acoes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .loja {
+        grid-template-columns: 1fr;
+    }
+
+    .estatisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header {
+        align-items: flex-start;
+    }
+
+    .pet-grande {
+        width: 180px;
+        height: 180px;
+    }
+
+    .inicio-card h1 {
+        font-size: 35px;
+    }
+}
