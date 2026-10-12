@@ -1,264 +1,2181 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VitaPet - Seu pet é o reflexo da sua saúde</title>
+
+    <meta
+        name="description"
+        content="VitaPet, um jogo educativo sobre hábitos saudáveis para a EXPOTEC."
+    >
+
+    <meta name="theme-color" content="#eaf8ef">
+
+    <title>VitaPet | EXPOTEC</title>
+
+    <!-- CSS ORIGINAL: mantém o desenho do pet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- ACABAMENTO VISUAL DESTA PÁGINA -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            --verde: #19a977;
+            --verde-escuro: #145c47;
+            --verde-claro: #e7f8ed;
+            --texto: #1e493b;
+            --cinza: #769184;
+            --borda: #e0eee5;
+            --branco: #ffffff;
+            --sombra: 0 18px 55px rgba(31, 100, 67, .09);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', Arial, sans-serif;
+            color: var(--texto);
+            background: #f0f9f3;
+            overflow-x: hidden;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #6ed5a5;
+            outline-offset: 3px;
+        }
+
+        .tela {
+            display: none;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        .logo {
+            font-size: 31px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            color: #194c40;
+        }
+
+        .logo span {
+            color: var(--verde);
+        }
+
+        /* ======================================
+           TELA DE BOAS-VINDAS
+        ====================================== */
+
+        #telaInicio {
+            display: none;
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 80% 25%,
+                    rgba(152, 224, 178, .35),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 85%,
+                    rgba(177, 230, 201, .32),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8fdf9,
+                    #eaf8ef
+                );
+        }
+
+        #telaInicio.ativa {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inicio-topo {
+            width: min(1250px, 100%);
+            margin: 0 auto;
+            padding: 30px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expotec-selo {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 17px;
+            background: rgba(255,255,255,.85);
+            border: 1px solid #d4eadd;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            color: #448b69;
+        }
+
+        .expotec-selo::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28bd87;
+        }
+
+        .inicio-layout {
+            flex: 1;
+            width: min(1250px, 100%);
+            margin: auto;
+            padding: 20px 45px 55px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .inicio-textos {
+            position: relative;
+            z-index: 2;
+        }
+
+        .inicio-etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            margin-bottom: 23px;
+            border-radius: 40px;
+            background: #e0f6e9;
+            color: #298e65;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .inicio-textos h1 {
+            max-width: 610px;
+            font-size: clamp(49px, 5vw, 77px);
+            line-height: 1.07;
+            letter-spacing: -3px;
+            font-weight: 900;
+            margin: 0 0 24px;
+        }
+
+        .inicio-textos h1 span {
+            color: var(--verde);
+        }
+
+        .inicio-textos > p {
+            max-width: 440px;
+            margin-bottom: 32px;
+            color: #698a78;
+            font-size: 18px;
+            line-height: 1.65;
+        }
+
+        .btn-principal {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            min-height: 56px;
+            padding: 16px 29px;
+            border: 0;
+            border-radius: 15px;
+            background: linear-gradient(
+                135deg,
+                #27c58a,
+                #14966b
+            );
+            color: white;
+            font-size: 14px;
+            font-weight: 900;
+            box-shadow: 0 13px 28px rgba(27, 162, 111, .22);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .btn-principal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 17px 32px rgba(27, 162, 111, .29);
+        }
+
+        .inicio-beneficios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 32px;
+        }
+
+        .inicio-beneficios span {
+            padding: 10px 13px;
+            background: rgba(255,255,255,.8);
+            border: 1px solid #dcece1;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #5e9074;
+        }
+
+        /* ======================================
+           DESTAQUE DO BONEQUINHO
+        ====================================== */
+
+        .inicio-visual {
+            position: relative;
+            min-height: 500px;
+            display: grid;
+            place-items: center;
+        }
+
+        .pet-aura {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            max-width: 90%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                #d2f3df 0%,
+                #dcf7e6 58%,
+                transparent 72%
+            );
+        }
+
+        .pet-anel {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            max-width: 85%;
+            border: 2px dashed #a7dabc;
+            border-radius: 50%;
+            animation: girar 45s linear infinite;
+        }
+
+        .inicio-pet-palco {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            place-items: center;
+            width: 320px;
+            height: 320px;
+        }
+
+        /*
+           AQUI NÃO ALTERAMOS O DESENHO.
+           Apenas ampliamos a apresentação
+           do pet usando a classe original.
+        */
+
+        .inicio-pet-palco .pet {
+            transform: scale(1.25);
+            transform-origin: center;
+            animation: flutuarPet 3.5s ease-in-out infinite;
+        }
+
+        .inicio-pet-sombra {
+            position: absolute;
+            z-index: 1;
+            bottom: 83px;
+            width: 230px;
+            height: 29px;
+            border-radius: 50%;
+            background: rgba(41, 109, 73, .18);
+            filter: blur(11px);
+        }
+
+        .estrela-decorativa {
+            position: absolute;
+            z-index: 4;
+            color: #86cba1;
+            font-size: 32px;
+            animation: brilhar 3s ease-in-out infinite;
+        }
+
+        .estrela-a {
+            top: 55px;
+            right: 95px;
+        }
+
+        .estrela-b {
+            bottom: 110px;
+            left: 55px;
+            animation-delay: 1s;
+        }
+
+        .estrela-c {
+            top: 115px;
+            left: 75px;
+            animation-delay: 1.8s;
+        }
+
+        .mini-cartao {
+            position: absolute;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 17px;
+            background: #ffffff;
+            border: 1px solid #e2eee6;
+            border-radius: 17px;
+            box-shadow: var(--sombra);
+            animation: flutuarCartao 4s ease-in-out infinite;
+        }
+
+        .mini-cartao strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .mini-cartao small {
+            display: block;
+            color: #90a79a;
+            font-size: 10px;
+        }
+
+        .mini-cartao .icone {
+            font-size: 26px;
+        }
+
+        .cartao-agua {
+            top: 125px;
+            left: -10px;
+        }
+
+        .cartao-pontos {
+            right: -10px;
+            bottom: 120px;
+            animation-delay: 1.1s;
+        }
+
+        .inicio-rodape {
+            padding: 15px;
+            text-align: center;
+            color: #90a99a;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* ======================================
+           CRIAÇÃO DO PET
+        ====================================== */
+
+        #telaCriador {
+            background:
+                radial-gradient(
+                    circle at top,
+                    #ddf6e6,
+                    transparent 60%
+                ),
+                #f2faf5;
+            padding: 30px 20px 70px;
+        }
+
+        .criador-container {
+            max-width: 530px;
+            margin: 0 auto;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 23px;
+            padding: 12px 17px;
+            border: 1px solid #dcece2;
+            border-radius: 12px;
+            background: white;
+            color: #33865e;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .criador-card {
+            padding: 37px;
+            background: white;
+            border: 1px solid #dfeee4;
+            border-radius: 29px;
+            box-shadow: var(--sombra);
+            text-align: center;
+        }
+
+        .subtitulo-verde {
+            display: block;
+            color: #3a9a6f;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .criador-card h1 {
+            font-size: 34px;
+            margin-bottom: 9px;
+            letter-spacing: -1px;
+        }
+
+        .criador-card p {
+            color: var(--cinza);
+            font-size: 13px;
+        }
+
+        .criador-pet-area {
+            position: relative;
+            height: 250px;
+            display: grid;
+            place-items: center;
+            margin: 13px 0;
+        }
+
+        .criador-pet-area::before {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                #d6f6e2,
+                transparent 73%
+            );
+        }
+
+        .criador-pet-area .pet {
+            z-index: 2;
+        }
+
+        .criador-formulario {
+            text-align: left;
+        }
+
+        .criador-formulario label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .criador-formulario input {
+            width: 100%;
+            margin: 0 0 16px;
+            padding: 16px;
+            border: 2px solid #dfefe4;
+            border-radius: 13px;
+            background: #fbfefc;
+            font-size: 15px;
+            color: var(--texto);
+        }
+
+        .criador-formulario .btn-principal {
+            width: 100%;
+        }
+
+        /* ======================================
+           CABEÇALHO DO JOGO
+        ====================================== */
+
+        #telaPrincipal {
+            background: #f1f9f4;
+        }
+
+        .cabecalho-jogo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 18px max(24px, calc((100vw - 1230px) / 2));
+            background: rgba(255,255,255,.94);
+            border-bottom: 1px solid #e1eee6;
+        }
+
+        .cabecalho-jogo .logo {
+            font-size: 27px;
+        }
+
+        .cabecalho-centro {
+            color: #83a591;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+        }
+
+        .recursos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recursos > span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 14px;
+            border-radius: 12px;
+            background: #edf8f0;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .recursos > span:last-child {
+            background: #fff7df;
+        }
+
+        /* ======================================
+           DASHBOARD
+        ====================================== */
+
+        .dashboard {
+            max-width: 1230px;
+            margin: auto;
+            padding: 35px 24px 60px;
+        }
+
+        .dashboard-intro {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-intro h1 {
+            margin: 5px 0 0;
+            font-size: 35px;
+            letter-spacing: -1px;
+        }
+
+        .dashboard-intro h1 span {
+            color: var(--verde);
+        }
+
+        .pet-tag {
+            padding: 11px 15px;
+            border-radius: 13px;
+            background: #e1f6e8;
+            color: #238c63;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.12fr .88fr;
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .painel {
+            overflow: hidden;
+            border: 1px solid var(--borda);
+            border-radius: 24px;
+            background: white;
+            box-shadow: var(--sombra);
+        }
+
+        .painel-titulo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 21px 24px;
+        }
+
+        .painel-titulo h2 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+        .painel-selo {
+            padding: 8px 12px;
+            border-radius: 30px;
+            background: #e8f8ed;
+            color: #2a9368;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        /* ======================================
+           QUARTO DO PET
+        ====================================== */
+
+        .quarto {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(
+                #e5f6eb 0%,
+                #d8f0e1 74%,
+                #e9dcc7 74%,
+                #e9dcc7 100%
+            );
+        }
+
+        .quarto::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 26%;
+            opacity: .28;
+            background-image:
+                radial-gradient(
+                    #a5d5b6 1px,
+                    transparent 1px
+                );
+            background-size: 26px 26px;
+        }
+
+        .janela {
+            position: absolute;
+            top: 35px;
+            left: 9%;
+            width: 125px;
+            height: 140px;
+            border: 9px solid white;
+            border-radius: 55px 55px 12px 12px;
+            background: linear-gradient(
+                #b9e9f7,
+                #f1fcff
+            );
+            box-shadow: 0 8px 20px #456d5419;
+        }
+
+        .janela::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #ffe29a;
+            box-shadow: 0 0 20px #ffe29a;
+        }
+
+        .janela::after {
+            content: "";
+            position: absolute;
+            left: calc(50% - 4px);
+            top: 0;
+            width: 8px;
+            height: 100%;
+            background: white;
+        }
+
+        .quadro {
+            position: absolute;
+            right: 14%;
+            top: 47px;
+            width: 77px;
+            height: 77px;
+            display: grid;
+            place-items: center;
+            border: 8px solid #d4b695;
+            border-radius: 12px;
+            background: #fff9e9;
+            font-size: 32px;
+            transform: rotate(6deg);
+        }
+
+        .planta {
+            position: absolute;
+            right: 8%;
+            bottom: 70px;
+            z-index: 2;
+            font-size: 65px;
+        }
+
+        .tapete {
+            position: absolute;
+            left: 50%;
+            bottom: 15px;
+            transform: translateX(-50%);
+            width: 340px;
+            height: 78px;
+            border: 9px solid #f5e7cf;
+            border-radius: 50%;
+            background: #fff9ec;
+        }
+
+        .pet-palco {
+            position: absolute;
+            left: 50%;
+            bottom: 67px;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .pet-palco .pet {
+            margin: auto;
+        }
+
+        .pet-sombra {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 27px;
+            border-radius: 50%;
+            background: rgba(43, 103, 71, .23);
+            filter: blur(10px);
+        }
+
+        .pet-mensagem {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 24px;
+        }
+
+        .pet-mensagem-icone {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 47px;
+            height: 47px;
+            border-radius: 15px;
+            background: #e4f7eb;
+            font-size: 24px;
+        }
+
+        .pet-mensagem .fala {
+            flex: 1;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+            color: #547c65;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: left;
+        }
+
+        /* ======================================
+           STATUS
+        ====================================== */
+
+        .status-card {
+            padding: 0 25px 24px;
+        }
+
+        .status-card .painel-titulo {
+            padding: 23px 0;
+            margin-bottom: 6px;
+        }
+
+        .status-item {
+            margin-bottom: 24px;
+        }
+
+        .status-informacao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 9px;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .status-informacao b {
+            color: #6c917b;
+        }
+
+        .barra {
+            width: 100%;
+            height: 12px;
+            overflow: hidden;
+            border-radius: 30px;
+            background: #edf2ee;
+        }
+
+        .barra-preenchida {
+            height: 100%;
+            width: 100%;
+            border-radius: inherit;
+            background: linear-gradient(
+                90deg,
+                #55c99a,
+                #a0e5bc
+            );
+            transition: width .35s ease;
+        }
+
+        .status-item:nth-of-type(2) .barra-preenchida {
+            background: linear-gradient(
+                90deg,
+                #ef8f9a,
+                #f5bac0
+            );
+        }
+
+        .status-item:nth-of-type(3) .barra-preenchida {
+            background: linear-gradient(
+                90deg,
+                #72b8f2,
+                #a6ddf9
+            );
+        }
+
+        .status-item:nth-of-type(4) .barra-preenchida {
+            background: linear-gradient(
+                90deg,
+                #f2c46b,
+                #f9e1a3
+            );
+        }
+
+        .status-item:nth-of-type(5) .barra-preenchida {
+            background: linear-gradient(
+                90deg,
+                #ad91e8,
+                #d0bdf7
+            );
+        }
+
+        .status-dica {
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 13px;
+            background: #f0faf3;
+            color: #648d72;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* ======================================
+           ATIVIDADES
+        ====================================== */
+
+        .secao {
+            margin-top: 24px;
+        }
+
+        .secao-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .secao-cabecalho h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .secao-cabecalho small {
+            color: #78a088;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .acoes {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .acoes button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 155px;
+            padding: 15px 9px;
+            border: 1px solid #dcebe2;
+            border-radius: 19px;
+            background: white;
+            color: var(--texto);
+            box-shadow: 0 8px 25px #235d3d0c;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .acoes button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px #235d3d1b;
+        }
+
+        .acao-icone {
+            display: grid;
+            place-items: center;
+            width: 67px;
+            height: 67px;
+            border-radius: 20px;
+            background: #e5f4ff;
+            font-size: 31px;
+        }
+
+        .acoes button:nth-child(2) .acao-icone {
+            background: #f0eaff;
+        }
+
+        .acoes button:nth-child(3) .acao-icone {
+            background: #fff0df;
+        }
+
+        .acoes button:nth-child(4) .acao-icone {
+            background: #e3f8e9;
+        }
+
+        .acoes button:nth-child(5) .acao-icone {
+            background: #ffedf0;
+        }
+
+        .acoes button strong {
+            font-size: 12px;
+        }
+
+        .acoes button small {
+            color: #25946a;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        /* ======================================
+           MENU
+        ====================================== */
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .menu button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            min-height: 76px;
+            padding: 15px;
+            border: 1px solid #dfeee5;
+            border-radius: 17px;
+            background: white;
+            color: var(--texto);
+            font-size: 13px;
+            font-weight: 900;
+            transition: transform .2s;
+        }
+
+        .menu button:hover {
+            transform: translateY(-3px);
+            background: #f6fdf8;
+        }
+
+        .menu button span {
+            font-size: 24px;
+        }
+
+        .rodape-jogo {
+            padding: 20px;
+            border-top: 1px solid #e0eee5;
+            text-align: center;
+            color: #8fa99a;
+            font-size: 11px;
+        }
+
+        /* ======================================
+           TELAS SECUNDÁRIAS
+        ====================================== */
+
+        .tela-secundaria {
+            padding: 35px 20px 70px;
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    #ddf6e6,
+                    transparent 35%
+                ),
+                #f1faf4;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .container.pequeno {
+            max-width: 560px;
+        }
+
+        .pagina-cabecalho {
+            margin-bottom: 27px;
+        }
+
+        .pagina-cabecalho h1 {
+            margin: 7px 0;
+            font-size: 37px;
+        }
+
+        .pagina-cabecalho p {
+            color: #7b9687;
+            font-size: 14px;
+        }
+
+        .lista-habitos {
+            display: grid;
+            gap: 13px;
+        }
+
+        .habito {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 17px;
+            padding: 18px 22px;
+            border: 1px solid #e0eee5;
+            border-radius: 18px;
+            background: white;
+            box-shadow: 0 8px 20px #235d3d0b;
+        }
+
+        .habito .habito-icone {
+            font-size: 29px;
+        }
+
+        .habito .habito-texto {
+            flex: 1;
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        .habito button {
+            padding: 12px 17px;
+            border-radius: 12px;
+            background: #e2f7ea;
+            color: #1c8e64;
+            font-weight: 900;
+        }
+
+        .desafios-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .desafio {
+            padding: 27px;
+            border: 1px solid #dfede4;
+            border-radius: 21px;
+            background: white;
+            box-shadow: var(--sombra);
+        }
+
+        .desafio > span {
+            font-size: 40px;
+        }
+
+        .desafio h3 {
+            margin: 16px 0 8px;
+            font-size: 19px;
+        }
+
+        .desafio p {
+            color: #82988b;
+            font-size: 12px;
+            min-height: 40px;
+        }
+
+        .desafio button {
+            width: 100%;
+            padding: 13px;
+            border-radius: 12px;
+            background: #e3f7ea;
+            color: #228e64;
+            font-weight: 900;
+        }
+
+        .evolucao-card {
+            max-width: 580px;
+            margin: auto;
+            padding: 35px;
+            border: 1px solid #dfeee5;
+            border-radius: 27px;
+            background: white;
+            text-align: center;
+            box-shadow: var(--sombra);
+        }
+
+        .evolucao-personagem {
+            display: grid;
+            place-items: center;
+            min-height: 245px;
+            background: radial-gradient(
+                circle,
+                #e0f8e9,
+                transparent 72%
+            );
+        }
+
+        .evolucao-card h2 {
+            margin: 12px 0;
+            font-size: 32px;
+        }
+
+        .evolucao-card p {
+            color: #82988b;
+            font-size: 13px;
+        }
+
+        .xp-barra {
+            height: 15px;
+            margin: 22px 0;
+            border-radius: 30px;
+            background: #edf4ef;
+            overflow: hidden;
+        }
+
+        #xpPreenchido {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(
+                90deg,
+                #1fa879,
+                #90dfb0
+            );
+        }
+
+        .estatisticas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 17px;
+        }
+
+        .estatistica {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 30px 15px;
+            border: 1px solid #dfede4;
+            border-radius: 21px;
+            background: white;
+            text-align: center;
+            box-shadow: var(--sombra);
+        }
+
+        .estatistica > span:first-child {
+            font-size: 39px;
+        }
+
+        .estatistica strong {
+            color: #21986c;
+            font-size: 39px;
+        }
+
+        .estatistica > span:last-child {
+            color: #7b9786;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .ranking {
+            display: grid;
+            gap: 12px;
+        }
+
+        .ranking-item {
+            display: grid;
+            grid-template-columns: 55px 1fr auto;
+            align-items: center;
+            gap: 15px;
+            padding: 22px;
+            border: 1px solid #dfede4;
+            border-radius: 17px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .ranking-item > span {
+            font-size: 25px;
+        }
+
+        .ranking-item strong {
+            color: #238b64;
+        }
+
+        .ranking-item.primeiro {
+            background: #e4f7ea;
+        }
+
+        .ranking-aviso {
+            margin-top: 16px;
+            color: #82988b;
+            font-size: 11px;
+        }
+
+        /* ======================================
+           NOTIFICAÇÃO
+        ====================================== */
+
+        #notificacao {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            z-index: 100;
+        }
+
+        /* ======================================
+           ANIMAÇÕES
+        ====================================== */
+
+        @keyframes flutuarPet {
+            0%, 100% {
+                transform: scale(1.25) translateY(0);
+            }
+
+            50% {
+                transform: scale(1.25) translateY(-10px);
+            }
+        }
+
+        @keyframes flutuarCartao {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes brilhar {
+            0%, 100% {
+                opacity: .5;
+                transform: scale(.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes girar {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ======================================
+           RESPONSIVIDADE
+        ====================================== */
+
+        @media (max-width: 950px) {
+            .inicio-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .inicio-textos > p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .inicio-beneficios {
+                justify-content: center;
+            }
+
+            .inicio-visual {
+                min-height: 400px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .acoes {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .estatisticas {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .inicio-topo {
+                padding: 22px 18px;
+            }
+
+            .inicio-layout {
+                padding: 25px 20px 45px;
+            }
+
+            .inicio-textos h1 {
+                font-size: 45px;
+                letter-spacing: -2px;
+            }
+
+            .inicio-textos > p {
+                font-size: 15px;
+            }
+
+            .inicio-visual {
+                min-height: 330px;
+            }
+
+            .pet-aura {
+                width: 290px;
+                height: 290px;
+            }
+
+            .pet-anel {
+                width: 260px;
+                height: 260px;
+            }
+
+            .inicio-pet-palco .pet {
+                transform: scale(1);
+                animation: none;
+            }
+
+            .mini-cartao {
+                padding: 9px;
+            }
+
+            .cartao-agua {
+                left: 0;
+                top: 60px;
+            }
+
+            .cartao-pontos {
+                right: 0;
+                bottom: 35px;
+            }
+
+            .criador-card {
+                padding: 26px 20px;
+            }
+
+            .cabecalho-jogo {
+                padding: 17px;
+            }
+
+            .cabecalho-centro {
+                display: none;
+            }
+
+            .dashboard {
+                padding: 25px 16px 45px;
+            }
+
+            .dashboard-intro {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .quarto {
+                height: 350px;
+            }
+
+            .janela {
+                width: 100px;
+                height: 115px;
+            }
+
+            .quadro {
+                right: 7%;
+            }
+
+            .planta {
+                right: 4%;
+            }
+
+            .tapete {
+                width: 270px;
+            }
+
+            .acoes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .menu {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .desafios-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .estatisticas {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .habito {
+                flex-wrap: wrap;
+            }
+
+            .habito button {
+                margin-left: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- TELA INICIAL -->
+    <!-- =========================================
+         TELA INICIAL
+    ========================================== -->
+
     <section id="telaInicio" class="tela ativa">
-        <div class="logo">Vita<span>Pet</span></div>
 
-        <div class="inicio-card">
-            <div class="pet pet-grande">
-                <div class="orelha esquerda"></div>
-                <div class="orelha direita"></div>
-                <div class="olho olho-esq"></div>
-                <div class="olho olho-dir"></div>
-                <div class="boca"></div>
-                <div class="bochecha esq"></div>
-                <div class="bochecha dir"></div>
+        <header class="inicio-topo">
+
+            <div class="logo">
+                Vita<span>Pet</span>
             </div>
 
-            <h1>VitaPet</h1>
-            <p>Seu pet é o reflexo da sua saúde.</p>
-
-            <button class="btn-principal" onclick="mostrarTela('telaCriador')">
-                COMEÇAR
-            </button>
-        </div>
-    </section>
-
-
-    <!-- CRIADOR DE PET -->
-    <section id="telaCriador" class="tela">
-        <div class="container pequeno">
-
-            <h1>Crie seu VitaPet</h1>
-            <p>Escolha um nome para seu novo companheiro.</p>
-
-            <div class="pet pet-medio">
-                <div class="orelha esquerda"></div>
-                <div class="orelha direita"></div>
-                <div class="olho olho-esq"></div>
-                <div class="olho olho-dir"></div>
-                <div class="boca"></div>
-                <div class="bochecha esq"></div>
-                <div class="bochecha dir"></div>
+            <div class="expotec-selo">
+                EXPOTEC
             </div>
 
-            <input type="text" id="nomePet" placeholder="Nome do seu pet">
-
-            <button class="btn-principal" onclick="criarPet()">
-                CRIAR PET
-            </button>
-
-        </div>
-    </section>
-
-
-    <!-- TELA PRINCIPAL -->
-    <section id="telaPrincipal" class="tela">
-
-        <header>
-            <div class="logo pequeno-logo">Vita<span>Pet</span></div>
-
-            <div class="recursos">
-                <span>⚡ <b id="bioenergia">100</b></span>
-                <span>⭐ <b id="biopontos">0</b></span>
-            </div>
         </header>
 
-        <main class="dashboard">
+        <main class="inicio-layout">
 
-            <div class="boas-vindas">
-                <h1>Olá, <span id="nomePetTela">Pet</span>!</h1>
-                <p>Cuide dos seus hábitos para manter seu pet saudável.</p>
-            </div>
+            <div class="inicio-textos">
 
-            <div class="pet-area">
-                <div id="petPrincipal" class="pet pet-grande">
+                <span class="inicio-etiqueta">
+                    🌱 SEU MUNDO SAUDÁVEL
+                </span>
 
-                    <div class="orelha esquerda"></div>
-                    <div class="orelha direita"></div>
-                    <div class="olho olho-esq"></div>
-                    <div class="olho olho-dir"></div>
-                    <div class="boca"></div>
-                    <div class="bochecha esq"></div>
-                    <div class="bochecha dir"></div>
+                <h1>
+                    Um amigo.
+                    <span>Mil aventuras.</span>
+                </h1>
 
-                </div>
+                <p>
+                    Cuide dos seus hábitos,
+                    ganhe pontos e veja seu
+                    VitaPet evoluir!
+                </p>
 
-                <div id="mensagemPet" class="fala">
-                    Estou pronto para cuidar da sua saúde!
-                </div>
-            </div>
+                <button
+                    type="button"
+                    class="btn-principal"
+                    onclick="mostrarTela('telaCriador')"
+                >
+                    COMEÇAR A JOGAR
+                    <span aria-hidden="true">→</span>
+                </button>
 
+                <div class="inicio-beneficios">
 
-            <!-- STATUS -->
-            <div class="status-card">
+                    <span>💚 Cuide</span>
+                    <span>⭐ Conquiste</span>
+                    <span>🏆 Evolua</span>
 
-                <h2>Status do Pet</h2>
-
-                <div class="status-item">
-                    <div>
-                        <span>❤️ Saúde</span>
-                        <b id="saudeValor">100</b>
-                    </div>
-                    <div class="barra">
-                        <div id="saudeBarra" class="barra-preenchida"></div>
-                    </div>
-                </div>
-
-                <div class="status-item">
-                    <div>
-                        <span>💧 Hidratação</span>
-                        <b id="hidratacaoValor">100</b>
-                    </div>
-                    <div class="barra">
-                        <div id="hidratacaoBarra" class="barra-preenchida"></div>
-                    </div>
-                </div>
-
-                <div class="status-item">
-                    <div>
-                        <span>⚡ Energia</span>
-                        <b id="energiaValor">100</b>
-                    </div>
-                    <div class="barra">
-                        <div id="energiaBarra" class="barra-preenchida"></div>
-                    </div>
-                </div>
-
-                <div class="status-item">
-                    <div>
-                        <span>😊 Felicidade</span>
-                        <b id="felicidadeValor">100</b>
-                    </div>
-                    <div class="barra">
-                        <div id="felicidadeBarra" class="barra-preenchida"></div>
-                    </div>
-                </div>
-
-                <div class="status-item">
-                    <div>
-                        <span>🧠 Saúde Mental</span>
-                        <b id="mentalValor">100</b>
-                    </div>
-                    <div class="barra">
-                        <div id="mentalBarra" class="barra-preenchida"></div>
-                    </div>
                 </div>
 
             </div>
 
+            <div class="inicio-visual">
 
-            <!-- AÇÕES -->
-            <div class="acoes">
+                <div class="pet-aura"></div>
+                <div class="pet-anel"></div>
 
-                <button onclick="beberAgua()">
-                    💧
-                    <span>Beber Água</span>
-                </button>
+                <span class="estrela-decorativa estrela-a">✦</span>
+                <span class="estrela-decorativa estrela-b">✧</span>
+                <span class="estrela-decorativa estrela-c">✦</span>
 
-                <button onclick="dormir()">
-                    😴
-                    <span>Dormir</span>
-                </button>
+                <div class="inicio-pet-palco">
 
-                <button onclick="exercicio()">
-                    🏃
-                    <span>Exercício</span>
-                </button>
+                    <!-- PERSONAGEM ORIGINAL INTACTO -->
 
-                <button onclick="alimentacao()">
-                    🥗
-                    <span>Alimentação</span>
-                </button>
+                    <div class="pet pet-grande">
 
-                <button onclick="pausaAtiva()">
-                    🧘
-                    <span>Pausa Ativa</span>
-                </button>
+                        <div class="orelha esquerda"></div>
+                        <div class="orelha direita"></div>
 
-            </div>
+                        <div class="olho olho-esq"></div>
+                        <div class="olho olho-dir"></div>
 
+                        <div class="boca"></div>
 
-            <!-- MENU -->
-            <div class="menu">
+                        <div class="bochecha esq"></div>
+                        <div class="bochecha dir"></div>
 
-                <button onclick="mostrarTela('telaRegistro')">
-                    📋
-                    <span>Hábitos</span>
-                </button>
+                    </div>
 
-                <button onclick="mostrarTela('telaLoja')">
-                    🛍️
-                    <span>Loja</span>
-                </button>
+                </div>
 
-                <button onclick="mostrarTela('telaEvolucao')">
-                    🏆
-                    <span>Evolução</span>
-                </button>
+                <div class="inicio-pet-sombra"></div>
 
-                <button onclick="mostrarTela('telaEstatisticas')">
-                    📊
-                    <span>Estatísticas</span>
-                </button>
+                <div class="mini-cartao cartao-agua">
 
-                <button onclick="mostrarTela('telaRanking')">
-                    👥
-                    <span>Ranking</span>
-                </button>
+                    <span class="icone">💧</span>
+
+                    <div>
+                        <strong>Hidratação</strong>
+                        <small>+10 pontos</small>
+                    </div>
+
+                </div>
+
+                <div class="mini-cartao cartao-pontos">
+
+                    <span class="icone">⭐</span>
+
+                    <div>
+                        <strong>BioPontos</strong>
+                        <small>Cuide e evolua</small>
+                    </div>
+
+                </div>
 
             </div>
 
         </main>
+
+        <footer class="inicio-rodape">
+            VitaPet • EXPOTEC
+        </footer>
+
     </section>
 
 
-    <!-- REGISTRO DE HÁBITOS -->
-    <section id="telaRegistro" class="tela">
+    <!-- =========================================
+         CRIADOR
+    ========================================== -->
 
-        <div class="container">
+    <section id="telaCriador" class="tela">
 
-            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
+        <div class="criador-container">
+
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaInicio')"
+            >
                 ← Voltar
             </button>
 
-            <h1>Registro de Hábitos</h1>
-            <p>Registre suas atividades saudáveis.</p>
+            <div class="criador-card">
+
+                <span class="subtitulo-verde">
+                    ✨ SEU NOVO COMPANHEIRO
+                </span>
+
+                <h1>Vamos começar?</h1>
+
+                <p>Dê um nome ao seu VitaPet!</p>
+
+                <div class="criador-pet-area">
+
+                    <!-- PERSONAGEM ORIGINAL INTACTO -->
+
+                    <div class="pet pet-medio">
+
+                        <div class="orelha esquerda"></div>
+                        <div class="orelha direita"></div>
+
+                        <div class="olho olho-esq"></div>
+                        <div class="olho olho-dir"></div>
+
+                        <div class="boca"></div>
+
+                        <div class="bochecha esq"></div>
+                        <div class="bochecha dir"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="criador-formulario">
+
+                    <label for="nomePet">
+                        Nome do seu pet
+                    </label>
+
+                    <input
+                        id="nomePet"
+                        type="text"
+                        maxlength="20"
+                        placeholder="Ex.: Verdinho"
+                        autocomplete="off"
+                        onkeydown="if(event.key === 'Enter') criarPet()"
+                    >
+
+                    <button
+                        type="button"
+                        class="btn-principal"
+                        onclick="criarPet()"
+                    >
+                        CRIAR MEU VITAPET
+                        <span>💚</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TELA PRINCIPAL
+    ========================================== -->
+
+    <section id="telaPrincipal" class="tela">
+
+        <header class="cabecalho-jogo">
+
+            <div class="logo">
+                Vita<span>Pet</span>
+            </div>
+
+            <div class="cabecalho-centro">
+                🌿 EXPOTEC
+            </div>
+
+            <div class="recursos">
+
+                <span>
+                    ⚡ <b id="bioenergia">100</b>
+                </span>
+
+                <span>
+                    ⭐ <b id="biopontos">0</b>
+                </span>
+
+            </div>
+
+        </header>
+
+        <main class="dashboard">
+
+            <div class="dashboard-intro">
+
+                <div>
+
+                    <span class="subtitulo-verde">
+                        MEU COMPANHEIRO
+                    </span>
+
+                    <h1>
+                        Olá,
+                        <span id="nomePetTela">Pet</span>!
+                    </h1>
+
+                </div>
+
+                <span class="pet-tag">
+                    💚 Meu VitaPet
+                </span>
+
+            </div>
+
+            <div class="dashboard-grid">
+
+                <!-- QUARTO -->
+                <div class="painel">
+
+                    <div class="painel-titulo">
+
+                        <h2>🏡 Meu cantinho</h2>
+
+                        <span class="painel-selo">
+                            💚 EM CASA
+                        </span>
+
+                    </div>
+
+                    <div class="quarto">
+
+                        <div class="janela"></div>
+
+                        <div class="quadro">
+                            🌱
+                        </div>
+
+                        <div class="planta">
+                            🪴
+                        </div>
+
+                        <div class="tapete"></div>
+
+                        <div class="pet-palco">
+
+                            <div class="pet-sombra"></div>
+
+                            <!-- PERSONAGEM ORIGINAL INTACTO -->
+
+                            <div
+                                id="petPrincipal"
+                                class="pet pet-grande"
+                            >
+
+                                <div class="orelha esquerda"></div>
+                                <div class="orelha direita"></div>
+
+                                <div class="olho olho-esq"></div>
+                                <div class="olho olho-dir"></div>
+
+                                <div class="boca"></div>
+
+                                <div class="bochecha esq"></div>
+                                <div class="bochecha dir"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="pet-mensagem">
+
+                        <span class="pet-mensagem-icone">
+                            💚
+                        </span>
+
+                        <div
+                            id="mensagemPet"
+                            class="fala"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            Estou feliz em estar aqui!
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="painel status-card">
+
+                    <div class="painel-titulo">
+
+                        <h2>💚 Meu bem-estar</h2>
+
+                        <span class="painel-selo">
+                            STATUS
+                        </span>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-informacao">
+
+                            <span>❤️ Saúde</span>
+
+                            <b id="saudeValor">100</b>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <div
+                                id="saudeBarra"
+                                class="barra-preenchida"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-informacao">
+
+                            <span>💧 Hidratação</span>
+
+                            <b id="hidratacaoValor">100</b>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <div
+                                id="hidratacaoBarra"
+                                class="barra-preenchida"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-informacao">
+
+                            <span>⚡ Energia</span>
+
+                            <b id="energiaValor">100</b>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <div
+                                id="energiaBarra"
+                                class="barra-preenchida"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-informacao">
+
+                            <span>😊 Felicidade</span>
+
+                            <b id="felicidadeValor">100</b>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <div
+                                id="felicidadeBarra"
+                                class="barra-preenchida"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-item">
+
+                        <div class="status-informacao">
+
+                            <span>🧠 Saúde mental</span>
+
+                            <b id="mentalValor">100</b>
+
+                        </div>
+
+                        <div class="barra">
+
+                            <div
+                                id="mentalBarra"
+                                class="barra-preenchida"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="status-dica">
+                        🌱 Cada hábito faz a diferença!
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATIVIDADES -->
+            <section class="secao">
+
+                <div class="secao-cabecalho">
+
+                    <h2>Cuide do seu VitaPet</h2>
+
+                    <small>⭐ GANHE BIOPONTOS</small>
+
+                </div>
+
+                <div class="acoes">
+
+                    <button
+                        type="button"
+                        onclick="beberAgua()"
+                    >
+
+                        <span class="acao-icone">💧</span>
+
+                        <strong>Beber água</strong>
+
+                        <small>+10 ⭐</small>
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="dormir()"
+                    >
+
+                        <span class="acao-icone">😴</span>
+
+                        <strong>Dormir</strong>
+
+                        <small>+30 ⭐</small>
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="exercicio()"
+                    >
+
+                        <span class="acao-icone">🏃</span>
+
+                        <strong>Exercício</strong>
+
+                        <small>+25 ⭐</small>
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="alimentacao()"
+                    >
+
+                        <span class="acao-icone">🥗</span>
+
+                        <strong>Alimentação</strong>
+
+                        <small>+20 ⭐</small>
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="pausaAtiva()"
+                    >
+
+                        <span class="acao-icone">🧘</span>
+
+                        <strong>Pausa ativa</strong>
+
+                        <small>+15 ⭐</small>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- MENU -->
+            <section class="secao">
+
+                <div class="secao-cabecalho">
+                    <h2>Explore o VitaPet</h2>
+                </div>
+
+                <div class="menu">
+
+                    <button
+                        type="button"
+                        onclick="mostrarTela('telaRegistro')"
+                    >
+                        <span>📋</span>
+                        Hábitos
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="mostrarTela('telaDesafios')"
+                    >
+                        <span>🎯</span>
+                        Desafios
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="mostrarTela('telaEvolucao')"
+                    >
+                        <span>🏆</span>
+                        Evolução
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="mostrarTela('telaEstatisticas')"
+                    >
+                        <span>📊</span>
+                        Estatísticas
+                    </button>
+
+                </div>
+
+            </section>
+
+            <section class="secao">
+
+                <div class="menu">
+
+                    <button
+                        type="button"
+                        onclick="mostrarTela('telaRanking')"
+                    >
+                        <span>🥇</span>
+                        Ranking
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer class="rodape-jogo">
+            VitaPet • EXPOTEC
+        </footer>
+
+    </section>
+
+
+    <!-- =========================================
+         HÁBITOS
+    ========================================== -->
+
+    <section
+        id="telaRegistro"
+        class="tela tela-secundaria"
+    >
+
+        <div class="container">
+
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaPrincipal')"
+            >
+                ← Voltar ao pet
+            </button>
+
+            <div class="pagina-cabecalho">
+
+                <span class="subtitulo-verde">
+                    HÁBITOS SAUDÁVEIS
+                </span>
+
+                <h1>📋 Minhas atividades</h1>
+
+                <p>Registre seus bons hábitos.</p>
+
+            </div>
 
             <div class="lista-habitos">
 
                 <div class="habito">
-                    <span>💧 Bebi água adequadamente</span>
-                    <button onclick="beberAgua()">+10</button>
+
+                    <span class="habito-icone">💧</span>
+
+                    <span class="habito-texto">
+                        Beber água
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="beberAgua()"
+                    >
+                        +10 ⭐
+                    </button>
+
                 </div>
 
                 <div class="habito">
-                    <span>😴 Dormi pelo menos 8 horas</span>
-                    <button onclick="dormir()">+30</button>
+
+                    <span class="habito-icone">😴</span>
+
+                    <span class="habito-texto">
+                        Dormir bem
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="dormir()"
+                    >
+                        +30 ⭐
+                    </button>
+
                 </div>
 
                 <div class="habito">
-                    <span>🏃 Pratiquei atividade física</span>
-                    <button onclick="exercicio()">+25</button>
+
+                    <span class="habito-icone">🏃</span>
+
+                    <span class="habito-texto">
+                        Fazer exercício
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="exercicio()"
+                    >
+                        +25 ⭐
+                    </button>
+
                 </div>
 
                 <div class="habito">
-                    <span>🥗 Tive uma alimentação saudável</span>
-                    <button onclick="alimentacao()">+20</button>
+
+                    <span class="habito-icone">🥗</span>
+
+                    <span class="habito-texto">
+                        Alimentação saudável
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="alimentacao()"
+                    >
+                        +20 ⭐
+                    </button>
+
                 </div>
 
                 <div class="habito">
-                    <span>🧘 Fiz uma pausa ativa</span>
-                    <button onclick="pausaAtiva()">+15</button>
+
+                    <span class="habito-icone">🧘</span>
+
+                    <span class="habito-texto">
+                        Pausa ativa
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="pausaAtiva()"
+                    >
+                        +15 ⭐
+                    </button>
+
                 </div>
 
             </div>
@@ -268,40 +2185,101 @@
     </section>
 
 
-    <!-- LOJA -->
-    <section id="telaLoja" class="tela">
+    <!-- =========================================
+         DESAFIOS SAUDÁVEIS
+         SUBSTITUI A LOJA
+    ========================================== -->
+
+    <section
+        id="telaDesafios"
+        class="tela tela-secundaria"
+    >
 
         <div class="container">
 
-            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
-                ← Voltar
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaPrincipal')"
+            >
+                ← Voltar ao pet
             </button>
 
-            <h1>🛍️ Loja VitaPet</h1>
-            <p>Use seus BioPontos para personalizar seu pet.</p>
+            <div class="pagina-cabecalho">
 
-            <div class="loja">
+                <span class="subtitulo-verde">
+                    MISSÕES SAUDÁVEIS
+                </span>
 
-                <div class="produto">
-                    <div class="produto-imagem">🎩</div>
-                    <h3>Chapéu</h3>
-                    <p>50 BioPontos</p>
-                    <button onclick="comprarItem('Chapéu', 50)">Comprar</button>
-                </div>
+                <h1>🎯 Desafios VitaPet</h1>
 
-                <div class="produto">
-                    <div class="produto-imagem">👓</div>
-                    <h3>Óculos</h3>
-                    <p>75 BioPontos</p>
-                    <button onclick="comprarItem('Óculos', 75)">Comprar</button>
-                </div>
+                <p>
+                    Escolha uma missão e registre a atividade.
+                </p>
 
-                <div class="produto">
-                    <div class="produto-imagem">🎒</div>
-                    <h3>Mochila</h3>
-                    <p>100 BioPontos</p>
-                    <button onclick="comprarItem('Mochila', 100)">Comprar</button>
-                </div>
+            </div>
+
+            <div class="desafios-grid">
+
+                <article class="desafio">
+
+                    <span>💧</span>
+
+                    <h3>Hora de hidratar!</h3>
+
+                    <p>
+                        Lembre-se de beber água
+                        ao longo do dia.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="beberAgua()"
+                    >
+                        Registrar água +10 ⭐
+                    </button>
+
+                </article>
+
+                <article class="desafio">
+
+                    <span>🏃</span>
+
+                    <h3>Corpo em movimento</h3>
+
+                    <p>
+                        Faça uma atividade física
+                        adequada para você.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="exercicio()"
+                    >
+                        Registrar exercício +25 ⭐
+                    </button>
+
+                </article>
+
+                <article class="desafio">
+
+                    <span>🧘</span>
+
+                    <h3>Momento de pausa</h3>
+
+                    <p>
+                        Reserve um momento para
+                        descansar a mente.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="pausaAtiva()"
+                    >
+                        Registrar pausa +15 ⭐
+                    </button>
+
+                </article>
 
             </div>
 
@@ -310,40 +2288,74 @@
     </section>
 
 
-    <!-- EVOLUÇÃO -->
-    <section id="telaEvolucao" class="tela">
+    <!-- =========================================
+         EVOLUÇÃO
+    ========================================== -->
+
+    <section
+        id="telaEvolucao"
+        class="tela tela-secundaria"
+    >
 
         <div class="container">
 
-            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
-                ← Voltar
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaPrincipal')"
+            >
+                ← Voltar ao pet
             </button>
 
-            <h1>🏆 Evolução</h1>
+            <div class="pagina-cabecalho">
+
+                <span class="subtitulo-verde">
+                    MINHA EVOLUÇÃO
+                </span>
+
+                <h1>🏆 Meu progresso</h1>
+
+            </div>
 
             <div class="evolucao-card">
 
-                <div class="pet pet-medio">
-                    <div class="orelha esquerda"></div>
-                    <div class="orelha direita"></div>
-                    <div class="olho olho-esq"></div>
-                    <div class="olho olho-dir"></div>
-                    <div class="boca"></div>
-                    <div class="bochecha esq"></div>
-                    <div class="bochecha dir"></div>
+                <div class="evolucao-personagem">
+
+                    <!-- PERSONAGEM ORIGINAL INTACTO -->
+
+                    <div class="pet pet-medio">
+
+                        <div class="orelha esquerda"></div>
+                        <div class="orelha direita"></div>
+
+                        <div class="olho olho-esq"></div>
+                        <div class="olho olho-dir"></div>
+
+                        <div class="boca"></div>
+
+                        <div class="bochecha esq"></div>
+                        <div class="bochecha dir"></div>
+
+                    </div>
+
                 </div>
 
-                <h2 id="nivelPet">Nível 1</h2>
+                <h2 id="nivelPet">
+                    Nível 1
+                </h2>
 
-                <p id="xpTexto">0 / 100 BioPontos</p>
+                <p id="xpTexto">
+                    0 / 100 BioPontos
+                </p>
 
                 <div class="xp-barra">
+
                     <div id="xpPreenchido"></div>
+
                 </div>
 
                 <p>
-                    Continue praticando hábitos saudáveis
-                    para evoluir seu VitaPet!
+                    Continue evoluindo!
                 </p>
 
             </div>
@@ -353,37 +2365,75 @@
     </section>
 
 
-    <!-- ESTATÍSTICAS -->
-    <section id="telaEstatisticas" class="tela">
+    <!-- =========================================
+         ESTATÍSTICAS
+    ========================================== -->
+
+    <section
+        id="telaEstatisticas"
+        class="tela tela-secundaria"
+    >
 
         <div class="container">
 
-            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
-                ← Voltar
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaPrincipal')"
+            >
+                ← Voltar ao pet
             </button>
 
-            <h1>📊 Estatísticas</h1>
+            <div class="pagina-cabecalho">
+
+                <span class="subtitulo-verde">
+                    MINHAS CONQUISTAS
+                </span>
+
+                <h1>📊 Estatísticas</h1>
+
+            </div>
 
             <div class="estatisticas">
 
                 <div class="estatistica">
+
+                    <span>💧</span>
+
                     <strong id="aguaTotal">0</strong>
-                    <span>Copos de água</span>
+
+                    <span>Água</span>
+
                 </div>
 
                 <div class="estatistica">
+
+                    <span>🏃</span>
+
                     <strong id="exercicioTotal">0</strong>
+
                     <span>Exercícios</span>
+
                 </div>
 
                 <div class="estatistica">
+
+                    <span>🥗</span>
+
                     <strong id="alimentacaoTotal">0</strong>
-                    <span>Alimentações saudáveis</span>
+
+                    <span>Alimentações</span>
+
                 </div>
 
                 <div class="estatistica">
+
+                    <span>🧘</span>
+
                     <strong id="pausaTotal">0</strong>
-                    <span>Pausas ativas</span>
+
+                    <span>Pausas</span>
+
                 </div>
 
             </div>
@@ -393,54 +2443,108 @@
     </section>
 
 
-    <!-- RANKING -->
-    <section id="telaRanking" class="tela">
+    <!-- =========================================
+         RANKING
+    ========================================== -->
+
+    <section
+        id="telaRanking"
+        class="tela tela-secundaria"
+    >
 
         <div class="container">
 
-            <button class="btn-voltar" onclick="mostrarTela('telaPrincipal')">
-                ← Voltar
+            <button
+                type="button"
+                class="btn-voltar"
+                onclick="mostrarTela('telaPrincipal')"
+            >
+                ← Voltar ao pet
             </button>
 
-            <h1>👥 Ranking VitaPet</h1>
-            <p>Veja como você está evoluindo.</p>
+            <div class="pagina-cabecalho">
+
+                <span class="subtitulo-verde">
+                    DESTAQUES
+                </span>
+
+                <h1>🥇 Ranking VitaPet</h1>
+
+            </div>
 
             <div class="ranking">
 
                 <div class="ranking-item primeiro">
-                    <span>🥇</span>
+
+                    <span>⭐</span>
+
                     <b>Você</b>
-                    <strong id="rankingPontos">0 pts</strong>
+
+                    <strong id="rankingPontos">
+                        0 pts
+                    </strong>
+
                 </div>
 
                 <div class="ranking-item">
-                    <span>🥈</span>
+
+                    <span>🥇</span>
+
                     <b>Lucas</b>
+
                     <strong>420 pts</strong>
+
                 </div>
 
                 <div class="ranking-item">
-                    <span>🥉</span>
+
+                    <span>🥈</span>
+
                     <b>Mariana</b>
+
                     <strong>380 pts</strong>
+
                 </div>
 
                 <div class="ranking-item">
-                    <span>4º</span>
+
+                    <span>🥉</span>
+
                     <b>Gabriel</b>
+
                     <strong>310 pts</strong>
+
                 </div>
 
             </div>
+
+            <p class="ranking-aviso">
+                Participantes fictícios para demonstração na EXPOTEC.
+            </p>
 
         </div>
 
     </section>
 
 
-    <div id="notificacao" class="notificacao"></div>
+    <!-- =========================================
+         NOTIFICAÇÕES
+    ========================================== -->
+
+    <div
+        id="notificacao"
+        class="notificacao"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =========================================
+         JAVASCRIPT ORIGINAL
+    ========================================== -->
 
     <script src="script.js"></script>
 
 </body>
+
 </html>
