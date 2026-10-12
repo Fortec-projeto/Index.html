@@ -1,596 +1,1931 @@
-* {
-    margin: 0;
-    padding: 0;
+
+/* ==========================================================
+   VITAPET — EXPOTEC
+   DESIGN SYSTEM / STYLE.CSS
+
+   Identidade:
+   - Verde como cor principal
+   - Interface leve e acolhedora
+   - Componentes consistentes
+   - Personagem CSS original preservado
+   - Responsividade e acessibilidade
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+
+/* ==========================================================
+   01. DESIGN TOKENS
+========================================================== */
+
+:root {
+    color-scheme: light;
+
+    --verde: #12aa7c;
+    --verde-hover: #0c926b;
+    --verde-escuro: #087452;
+    --verde-claro: #e5f8ef;
+    --verde-suave: #f2fcf7;
+
+    --escuro: #102f39;
+    --texto: #24434a;
+    --cinza: #71868b;
+    --cinza-claro: #a5b5b8;
+
+    --fundo: #f1f8f5;
+    --branco: #ffffff;
+    --borda: #e3eeeb;
+
+    --azul: #60b9ec;
+    --azul-claro: #e8f6ff;
+
+    --amarelo: #f2bf58;
+    --amarelo-claro: #fff7e4;
+
+    --rosa: #ef9bab;
+    --rosa-claro: #fff0f3;
+
+    --roxo: #a28be9;
+    --roxo-claro: #f3efff;
+
+    --erro: #cf5261;
+
+    --sombra-suave:
+        0 5px 18px rgba(16, 47, 57, .045);
+
+    --sombra:
+        0 12px 35px rgba(16, 47, 57, .08);
+
+    --sombra-forte:
+        0 20px 55px rgba(16, 47, 57, .12);
+
+    --raio-pequeno: 12px;
+    --raio-medio: 18px;
+    --raio-grande: 25px;
+    --raio-extra: 32px;
+
+    --transicao:
+        220ms cubic-bezier(.2, .8, .2, 1);
+
+    --largura-maxima: 1160px;
+}
+
+
+/* ==========================================================
+   02. RESET E BASE
+========================================================== */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #eefaf7;
-    color: #183b36;
+    min-height: 100vh;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    line-height: 1.6;
+
+    color: var(--texto);
+    background: var(--fundo);
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
 }
 
 button {
-    font-family: inherit;
     cursor: pointer;
-    border: none;
+    border: 0;
+    -webkit-tap-highlight-color: transparent;
 }
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+    transform: none !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+img {
+    display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--escuro);
+    line-height: 1.2;
+}
+
+h1 {
+    letter-spacing: -.045em;
+}
+
+h2 {
+    letter-spacing: -.025em;
+}
+
+p {
+    line-height: 1.65;
+}
+
+::selection {
+    background: #b8f0d6;
+    color: #103b30;
+}
+
+:focus-visible {
+    outline: 3px solid #62d9b0;
+    outline-offset: 4px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ==========================================================
+   03. TRANSIÇÕES
+========================================================== */
+
+button,
+a,
+input,
+.painel,
+.card,
+.habito,
+.ranking-item,
+.conquista {
+    transition:
+        background-color var(--transicao),
+        border-color var(--transicao),
+        box-shadow var(--transicao),
+        transform var(--transicao),
+        opacity var(--transicao);
+}
+
+button:not(:disabled):active {
+    transform: scale(.97);
+}
+
+
+/* ==========================================================
+   04. ESTRUTURA DAS TELAS
+========================================================== */
 
 .tela {
     display: none;
     min-height: 100vh;
-    padding: 30px 20px;
+    padding: 28px 20px;
 }
 
 .tela.ativa {
     display: block;
+    animation: entradaTela .35s ease both;
 }
-
-
-/* LOGO */
-
-.logo {
-    font-size: 48px;
-    font-weight: 900;
-    color: #164e63;
-}
-
-.logo span {
-    color: #20a87a;
-}
-
-
-/* TELA INICIAL */
-
-#telaInicio {
-    background: linear-gradient(135deg, #d9fff4, #eefaf7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-#telaInicio.ativa {
-    display: flex;
-}
-
-.inicio-card {
-    text-align: center;
-    background: white;
-    width: 100%;
-    max-width: 500px;
-    padding: 40px 25px;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-}
-
-.inicio-card h1 {
-    font-size: 42px;
-    margin: 15px 0 5px;
-}
-
-.inicio-card p {
-    color: #66807a;
-    margin-bottom: 25px;
-}
-
-
-/* BOTÕES */
-
-.btn-principal {
-    background: #20a87a;
-    color: white;
-    padding: 15px 35px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.btn-principal:hover {
-    transform: translateY(-2px);
-    background: #168b64;
-}
-
-.btn-voltar {
-    background: white;
-    padding: 10px 18px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    color: #164e63;
-    font-weight: bold;
-}
-
-
-/* CONTAINER */
 
 .container {
-    max-width: 900px;
-    margin: auto;
+    width: min(100%, var(--largura-maxima));
+    margin-inline: auto;
 }
 
 .container.pequeno {
-    max-width: 500px;
+    max-width: 950px;
+}
+
+.dashboard {
+    width: min(100%, var(--largura-maxima));
+    margin-inline: auto;
+}
+
+.pagina {
+    max-width: 950px;
+    margin: 20px auto 50px;
+}
+
+.pagina > h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin-bottom: 10px;
+}
+
+.pagina > p {
+    color: var(--cinza);
+    margin-bottom: 25px;
+}
+
+
+/* ==========================================================
+   05. SUPERFÍCIES E CARTÕES
+========================================================== */
+
+.painel,
+.card,
+.inicio-card,
+.criador-card,
+.resumo-card,
+.painel-principal,
+.status-card,
+.area-pet {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+    box-shadow: var(--sombra);
+}
+
+.painel {
+    overflow: visible;
+}
+
+.bloco {
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.bloco h2 {
+    margin-bottom: 16px;
+}
+
+.conteudo-card {
+    padding: 24px;
+}
+
+.espaco-acima {
+    margin-top: 20px;
+}
+
+.painel:hover,
+.resumo-card:hover {
+    border-color: #d5e9df;
+}
+
+.etiqueta {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: #10936f;
+}
+
+
+/* ==========================================================
+   06. BOTÕES
+========================================================== */
+
+.btn-principal,
+.btn-secundario,
+.btn-perigo,
+.btn-voltar,
+.link-botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 46px;
+    padding: 13px 22px;
+
+    border-radius: 14px;
+
+    font-weight: 900;
+    line-height: 1.3;
     text-align: center;
 }
 
-.container h1 {
-    margin-bottom: 10px;
-    font-size: 32px;
+.btn-principal {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16b987,
+            #0d966c
+        );
+
+    box-shadow:
+        0 8px 20px rgba(18, 170, 124, .24);
 }
 
-.container > p {
-    color: #66807a;
-    margin-bottom: 30px;
+.btn-principal:hover:not(:disabled) {
+    background:
+        linear-gradient(
+            135deg,
+            #0fa579,
+            #087e5b
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 24px rgba(18, 170, 124, .28);
 }
 
+.btn-secundario,
+.btn-voltar {
+    color: #13785e;
+    background: #e6f4ef;
+}
 
-/* INPUT */
+.btn-secundario:hover,
+.btn-voltar:hover {
+    background: #d6eee3;
+    transform: translateY(-2px);
+}
 
-input {
+.btn-perigo {
+    background: #ffe9e9;
+    color: #b93242;
+}
+
+.btn-perigo:hover {
+    background: #ffdddd;
+}
+
+.btn-largura {
     width: 100%;
-    padding: 15px;
-    border: 2px solid #d5ebe5;
-    border-radius: 12px;
-    margin: 20px 0;
-    font-size: 16px;
+}
+
+.btn-voltar {
+    margin-bottom: 28px;
+}
+
+
+/* ==========================================================
+   07. CAMPOS E FORMULÁRIOS
+========================================================== */
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 800;
+    color: var(--escuro);
+}
+
+input:not([type="file"]),
+textarea,
+select {
+    width: 100%;
+
+    min-height: 48px;
+    padding: 13px 15px;
+
+    color: var(--escuro);
+    background: #ffffff;
+
+    border: 2px solid var(--borda);
+    border-radius: 13px;
+
     outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s;
 }
 
-input:focus {
-    border-color: #20a87a;
+input::placeholder,
+textarea::placeholder {
+    color: #a0b0b1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--verde);
+    box-shadow:
+        0 0 0 4px rgba(18, 170, 124, .1);
+}
+
+.erro-nome,
+#erroNome {
+    color: var(--erro);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.criador-ajuda {
+    color: var(--cinza);
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 
-/* PET */
+/* ==========================================================
+   08. MARCA E CABEÇALHO
+========================================================== */
+
+.logo,
+.marca {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1.3px;
+    color: var(--escuro);
+}
+
+.logo span,
+.marca span {
+    color: var(--verde);
+}
+
+.pequeno-logo {
+    font-size: 23px;
+}
+
+.marca-expotec,
+.selo-expotec {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border: 1px solid #cdeee0;
+    border-radius: 10px;
+
+    background: #e6f8ef;
+    color: #148363;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .7px;
+}
+
+.topo,
+.inicio-topo {
+    width: min(100%, var(--largura-maxima));
+
+    margin: 0 auto 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.navegacao-topo {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.navegacao-topo button,
+.navegacao-topo a {
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    color: var(--texto);
+    background: transparent;
+
+    font-weight: 800;
+}
+
+.navegacao-topo button:hover,
+.navegacao-topo a:hover,
+.navegacao-topo .nav-ativo {
+    color: var(--verde-escuro);
+    background: var(--verde-claro);
+}
+
+.recursos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.recursos > span,
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 10px 13px;
+
+    background: white;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ==========================================================
+   09. PÁGINA INICIAL
+========================================================== */
+
+.entrada {
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at 15% 18%,
+            rgba(187, 246, 218, .55),
+            transparent 37%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(206, 230, 255, .48),
+            transparent 36%
+        ),
+        linear-gradient(
+            135deg,
+            #f7fffb,
+            #edf7f5
+        );
+
+    overflow: hidden;
+}
+
+.inicio-destaque {
+    position: relative;
+    isolation: isolate;
+}
+
+.inicio-texto h1 {
+    font-size: clamp(38px, 5.3vw, 68px);
+    line-height: 1.08;
+    letter-spacing: -.055em;
+}
+
+.inicio-texto h1 em,
+.inicio-texto h1 span {
+    font-style: normal;
+    color: var(--verde);
+}
+
+.inicio-texto p {
+    max-width: 560px;
+    color: var(--cinza);
+    font-size: clamp(15px, 1.5vw, 18px);
+}
+
+.inicio-beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.inicio-beneficios > * {
+    border-radius: 999px;
+    border: 1px solid #d8eee3;
+
+    background: rgba(255, 255, 255, .85);
+
+    padding: 9px 13px;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.inicio-visual {
+    position: relative;
+    isolation: isolate;
+}
+
+.flutuante {
+    animation: flutuarDecoracao 4s ease-in-out infinite;
+}
+
+.flutuante-2 {
+    animation-delay: -2s;
+}
+
+.decoracao-fundo,
+.circulo-decorativo {
+    pointer-events: none;
+}
+
+.rodape-inicio {
+    color: var(--cinza);
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/* ==========================================================
+   10. CRIADOR
+========================================================== */
+
+.criador {
+    width: min(100%, 470px);
+    padding: 35px;
+}
+
+.criador-card {
+    position: relative;
+}
+
+.criador-card h1 {
+    font-size: clamp(27px, 4vw, 38px);
+}
+
+.criador-pet {
+    display: grid;
+    place-items: center;
+}
+
+.criador-passos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.criador-passos > * {
+    border-radius: 999px;
+}
+
+
+/* ==========================================================
+   11. DASHBOARD
+========================================================== */
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+    font-size: clamp(27px, 4vw, 38px);
+}
+
+.cabecalho h1 span {
+    color: var(--verde);
+}
+
+.grade-principal {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.area-pet,
+.status-card {
+    min-width: 0;
+    padding: 25px;
+}
+
+.area-pet {
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f3fffa
+        );
+}
+
+.titulo-linha,
+.area-cabecalho,
+.titulo-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.titulo-linha {
+    margin-bottom: 20px;
+}
+
+.titulo-linha h2 {
+    font-size: 21px;
+}
+
+.boas-vindas {
+    color: var(--cinza);
+}
+
+.nivel-destaque {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 12px;
+
+    border-radius: 12px;
+
+    color: #805d1a;
+    background: #fff4d7;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* ==========================================================
+   12. CENÁRIO DO PERSONAGEM
+========================================================== */
+
+.cenario {
+    position: relative;
+
+    min-height: 270px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: visible;
+
+    background:
+        radial-gradient(
+            circle,
+            #d9faec,
+            transparent 68%
+        );
+}
+
+.pet-area,
+.pet-palco {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    isolation: isolate;
+}
+
+.cenario-chao,
+.cenario-tapete,
+.pedestal,
+.sombra-pet {
+    pointer-events: none;
+}
+
+.sombra-pet {
+    border-radius: 50%;
+    background: rgba(23, 77, 57, .12);
+    filter: blur(7px);
+}
+
+.cenario-sol {
+    background: #ffe7a0;
+    border-radius: 50%;
+}
+
+.cenario-nuvem {
+    background: rgba(255, 255, 255, .8);
+    border-radius: 999px;
+}
+
+
+/* ==========================================================
+   13. PERSONAGEM ORIGINAL — PRESERVADO
+
+   Este bloco mantém o desenho original:
+   corpo, orelhas, olhos, boca e bochechas.
+========================================================== */
 
 .pet {
+    --cor-pet: #8bd8c1;
+
     position: relative;
-    margin: auto;
-    background: #8bd8c1;
+
+    background: var(--cor-pet);
+
     border: 5px solid #286c5a;
     border-radius: 48% 48% 45% 45%;
-    box-shadow: 0 10px 0 rgba(0,0,0,0.08);
+
+    box-shadow:
+        inset -13px -12px #4d9e8930,
+        0 14px 20px #174d3930;
+
+    animation:
+        flutuar 2.5s infinite ease-in-out;
+
+    isolation: isolate;
 }
 
 .pet-grande {
-    width: 210px;
-    height: 210px;
+    width: 190px;
+    height: 190px;
 }
 
 .pet-medio {
-    width: 160px;
-    height: 160px;
-    margin-top: 25px;
-    margin-bottom: 15px;
+    width: 155px;
+    height: 155px;
 }
 
 .orelha {
     position: absolute;
-    width: 65px;
-    height: 80px;
+
+    width: 31%;
+    height: 42%;
+    top: -19%;
+
     background: #72c9ae;
     border: 5px solid #286c5a;
-    top: -35px;
     border-radius: 50%;
+
+    z-index: -1;
 }
 
 .orelha.esquerda {
-    left: 5px;
+    left: 3%;
     transform: rotate(-25deg);
 }
 
 .orelha.direita {
-    right: 5px;
+    right: 3%;
     transform: rotate(25deg);
 }
 
 .olho {
     position: absolute;
-    width: 22px;
-    height: 30px;
+
+    width: 11%;
+    height: 15%;
+    top: 36%;
+
     background: #183b36;
     border-radius: 50%;
-    top: 75px;
 }
 
 .olho-esq {
-    left: 55px;
+    left: 26%;
 }
 
 .olho-dir {
-    right: 55px;
+    right: 26%;
 }
 
 .boca {
     position: absolute;
-    width: 35px;
-    height: 18px;
+
+    width: 19%;
+    height: 11%;
+
+    top: 55%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
     border-bottom: 5px solid #183b36;
     border-radius: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 115px;
 }
 
 .bochecha {
     position: absolute;
-    width: 25px;
-    height: 12px;
+
+    width: 14%;
+    height: 7%;
+
+    top: 57%;
+
     background: #f2a6a6;
     border-radius: 50%;
-    top: 115px;
 }
 
 .bochecha.esq {
-    left: 25px;
+    left: 12%;
 }
 
 .bochecha.dir {
-    right: 25px;
+    right: 12%;
 }
 
 
-/* CABEÇALHO */
+/* ==========================================================
+   14. EXPRESSÕES DO PET
+========================================================== */
 
-header {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+.pet.triste .boca {
+    border-bottom: none;
+    border-top: 5px solid #183b36;
+    top: 64%;
 }
 
-.pequeno-logo {
-    font-size: 30px;
+.pet.triste .olho {
+    height: 8%;
 }
 
-.recursos {
-    display: flex;
-    gap: 15px;
+.pet.cansado .olho {
+    height: 5%;
+    top: 42%;
 }
 
-.recursos span {
-    background: white;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+.pet.festejar,
+.pet.comemorando {
+    animation:
+        comemorar .65s ease-in-out;
 }
 
-
-/* DASHBOARD */
-
-.dashboard {
-    max-width: 1100px;
-    margin: auto;
+.pet.triste {
+    filter: saturate(.88);
 }
 
-.boas-vindas {
-    margin-bottom: 20px;
-}
-
-.boas-vindas h1 {
-    font-size: 30px;
-}
-
-.boas-vindas span {
-    color: #20a87a;
-}
-
-.boas-vindas p {
-    color: #66807a;
-    margin-top: 5px;
+.pet.cansado {
+    animation-duration: 3.5s;
 }
 
 
-/* ÁREA DO PET */
+/* ==========================================================
+   15. ACESSÓRIOS ANTIGOS
 
-.pet-area {
-    text-align: center;
-    background: white;
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 20px;
+   Compatibilidade sem modificar
+   o personagem original.
+========================================================== */
+
+.acessorios-pet {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
+
+.acessorio {
+    position: absolute;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.acessorio.chapeu,
+.acessorio-chapeu {
+    top: -36%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.acessorio.oculos,
+.acessorio-oculos {
+    top: 31%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.acessorio.mochila,
+.acessorio-mochila {
+    right: -26%;
+    top: 40%;
+    z-index: -1;
+}
+
+
+/* ==========================================================
+   16. FALA E HUMOR
+========================================================== */
 
 .fala {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 12px 20px;
-    background: #e7f8f2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    max-width: 100%;
+    padding: 13px 17px;
+
     border-radius: 15px;
-    color: #286c5a;
+
+    background: #e6f8ef;
+    color: #23795f;
+
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.fala-icone {
+    flex-shrink: 0;
+}
+
+.humor-pet {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: #e6f8ef;
+    color: #197d60;
+
+    font-size: 12px;
+    font-weight: 900;
 }
 
 
-/* STATUS */
-
-.status-card {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-}
-
-.status-card h2 {
-    margin-bottom: 20px;
-}
+/* ==========================================================
+   17. STATUS E BARRAS
+========================================================== */
 
 .status-item {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .status-item > div:first-child {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 7px;
+    gap: 12px;
+
+    margin-bottom: 8px;
+
+    font-weight: 800;
 }
 
-.barra {
+.status-item strong,
+.status-item span {
+    font-variant-numeric: tabular-nums;
+}
+
+.barra,
+.xp-barra {
     width: 100%;
-    height: 12px;
-    background: #e6efed;
-    border-radius: 20px;
+    height: 11px;
+
+    border-radius: 999px;
+
+    background: #e8efed;
+
     overflow: hidden;
 }
 
-.barra-preenchida {
+.barra > div,
+.barra-preenchida,
+#xpPreenchido,
+#xpResumoBarra {
     height: 100%;
-    width: 100%;
-    background: #20a87a;
-    border-radius: 20px;
-    transition: width 0.3s;
+    max-width: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #12aa7c,
+            #64dba7
+        );
+
+    transition:
+        width .45s cubic-bezier(.2, .8, .2, 1),
+        background-color .25s;
+}
+
+.barra > div.alerta,
+.barra > div.baixo,
+.barra-preenchida.alerta,
+.barra-preenchida.baixo {
+    background:
+        linear-gradient(
+            90deg,
+            #f4a15d,
+            #e44c59
+        );
+}
+
+.barra-hidratacao {
+    background:
+        linear-gradient(90deg, #4baee8, #8bd9f5);
+}
+
+.barra-energia {
+    background:
+        linear-gradient(90deg, #f0b34d, #f7d67d);
+}
+
+.barra-felicidade {
+    background:
+        linear-gradient(90deg, #e989a3, #f6b8c5);
+}
+
+.barra-mental {
+    background:
+        linear-gradient(90deg, #9b82e5, #c5b2f7);
+}
+
+.status-dica,
+.aviso-tempo {
+    padding: 12px 14px;
+
+    background: #f5f8f7;
+    border-radius: 12px;
+
+    color: var(--cinza);
+    font-size: 12px;
+    line-height: 1.6;
 }
 
 
-/* AÇÕES */
+/* ==========================================================
+   18. BOTÕES DE ATIVIDADES
+========================================================== */
 
 .acoes {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
     gap: 12px;
-    margin-bottom: 20px;
 }
 
 .acoes button {
-    background: white;
-    border-radius: 15px;
-    padding: 18px 10px;
-    color: #183b36;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-    transition: 0.2s;
+    position: relative;
+
+    min-width: 0;
+    min-height: 125px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 18px 9px;
+
+    background: #f7faf9;
+
+    border: 1px solid var(--borda);
+    border-radius: 17px;
+
+    text-align: center;
 }
 
-.acoes button:hover {
-    transform: translateY(-3px);
+.acoes button:hover:not(:disabled) {
+    background: var(--verde-claro);
+    border-color: #b9e8d1;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 25px rgba(18, 170, 124, .09);
 }
 
-.acoes button:first-letter {
-    font-size: 25px;
+.acoes button > span {
+    font-size: 30px;
 }
 
-.acoes span {
-    display: block;
-    margin-top: 7px;
+.acoes strong {
+    color: var(--escuro);
     font-size: 13px;
-    font-weight: bold;
+    line-height: 1.3;
+}
+
+.acoes small {
+    color: #119873;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.icone-acao {
+    display: grid;
+    place-items: center;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 16px;
+}
+
+.acao-agua {
+    background: var(--azul-claro);
+}
+
+.acao-sono {
+    background: var(--roxo-claro);
+}
+
+.acao-exercicio {
+    background: var(--amarelo-claro);
+}
+
+.acao-alimentacao {
+    background: var(--verde-claro);
+}
+
+.acao-pausa {
+    background: var(--rosa-claro);
 }
 
 
-/* MENU */
+/* ==========================================================
+   19. MENU DE NAVEGAÇÃO
+========================================================== */
 
 .menu {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-}
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
-.menu button {
-    background: #164e63;
-    color: white;
-    padding: 15px 5px;
-    border-radius: 12px;
-    font-weight: bold;
-}
-
-.menu button span {
-    display: block;
-    margin-top: 5px;
-    font-size: 12px;
-}
-
-
-/* HÁBITOS */
-
-.lista-habitos {
-    display: flex;
-    flex-direction: column;
     gap: 12px;
 }
 
-.habito {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
+.menu button {
+    min-width: 0;
+    min-height: 100px;
+
+    padding: 18px 10px;
+
+    border-radius: 16px;
+
+    color: white;
+    background: var(--escuro);
+
+    font-size: 25px;
+}
+
+.menu button:hover:not(:disabled) {
+    background: #1c5060;
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 20px rgba(16, 47, 57, .14);
+}
+
+.menu span {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* ==========================================================
+   20. TÍTULOS DAS PÁGINAS
+========================================================== */
+
+.cabecalho-pagina {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.cabecalho-pagina h1 {
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+.titulo-secao {
+    margin: 25px 0 15px;
+}
+
+.subtitulo {
+    margin: 30px 0 15px;
+}
+
+
+/* ==========================================================
+   21. HÁBITOS
+========================================================== */
+
+.lista-habitos {
+    padding: 14px;
+}
+
+.habito {
+    display: flex;
     align-items: center;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 17px;
+
+    border-bottom: 1px solid var(--borda);
+
+    font-weight: 800;
+}
+
+.habito:last-child {
+    border-bottom: none;
+}
+
+.habito:hover {
+    background: #f8fcfa;
+}
+
+.habito-informacao {
+    min-width: 0;
+}
+
+.habito-informacao p {
+    margin-top: 4px;
+    color: var(--cinza);
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .habito button,
 .produto button {
-    background: #20a87a;
+    flex-shrink: 0;
+
+    padding: 11px 18px;
+
+    border-radius: 12px;
+
     color: white;
-    padding: 10px 18px;
-    border-radius: 9px;
-    font-weight: bold;
+    background: var(--verde);
+
+    font-weight: 900;
+}
+
+.habito button:hover,
+.produto button:hover {
+    background: var(--verde-hover);
+    transform: translateY(-2px);
 }
 
 
-/* LOJA */
-
-.loja {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.produto {
-    background: white;
-    text-align: center;
-    padding: 25px;
-    border-radius: 20px;
-}
-
-.produto-imagem {
-    font-size: 60px;
-    margin-bottom: 15px;
-}
-
-.produto h3 {
-    margin-bottom: 8px;
-}
-
-.produto p {
-    color: #66807a;
-    margin-bottom: 15px;
-}
-
-
-/* EVOLUÇÃO */
+/* ==========================================================
+   22. EVOLUÇÃO
+========================================================== */
 
 .evolucao-card {
-    background: white;
+    padding: 45px 30px;
     text-align: center;
-    padding: 35px;
-    border-radius: 25px;
+}
+
+.evolucao-medalha,
+.trofeu {
+    display: inline-grid;
+    place-items: center;
+
+    font-size: 65px;
 }
 
 .evolucao-card h2 {
-    margin-top: 15px;
+    font-size: clamp(27px, 4vw, 36px);
 }
 
 .xp-barra {
     max-width: 500px;
     height: 18px;
-    background: #e6efed;
-    border-radius: 20px;
-    margin: 15px auto;
-    overflow: hidden;
+
+    margin: 22px auto;
 }
 
-#xpPreenchido {
-    width: 0%;
-    height: 100%;
-    background: #20a87a;
-    transition: 0.4s;
+#xpPreenchido,
+#xpResumoBarra {
+    background:
+        linear-gradient(
+            90deg,
+            #14ae7d,
+            #74ddb0
+        );
+}
+
+.pontos-acumulados {
+    color: var(--verde-escuro);
+    font-weight: 900;
+}
+
+.marcos-evolucao {
+    display: grid;
+    gap: 12px;
 }
 
 
-/* ESTATÍSTICAS */
+/* ==========================================================
+   23. ESTATÍSTICAS
+========================================================== */
 
 .estatisticas {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
     gap: 15px;
 }
 
 .estatistica {
-    background: white;
-    padding: 30px 15px;
+    min-width: 0;
+
+    padding: 25px 12px;
+
     text-align: center;
-    border-radius: 20px;
+
+    font-size: 28px;
 }
 
 .estatistica strong {
     display: block;
-    font-size: 35px;
-    color: #20a87a;
-    margin-bottom: 8px;
+
+    color: var(--verde);
+
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 900;
+
+    font-variant-numeric: tabular-nums;
 }
 
 .estatistica span {
-    color: #66807a;
+    display: block;
+
+    color: var(--cinza);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.resumo-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.resumo-card {
+    min-width: 0;
+    padding: 22px;
+}
+
+.grafico-atividades {
+    width: 100%;
+}
+
+.grafico-linha {
+    margin-bottom: 18px;
+}
+
+.grafico-trilho {
+    height: 12px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+    background: #e7f3eb;
+}
+
+.grafico-barra {
+    height: 100%;
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #19a977,
+            #8bdab0
+        );
+
+    transition: width .45s ease;
 }
 
 
-/* RANKING */
+/* ==========================================================
+   24. HISTÓRICO
+========================================================== */
 
-.ranking {
-    display: flex;
-    flex-direction: column;
+.historico {
+    display: grid;
     gap: 10px;
 }
 
-.ranking-item {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 50px 1fr 100px;
+.historico-item {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid var(--borda);
+}
+
+.historico-item:last-child {
+    border-bottom: 0;
+}
+
+.historico-item span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.historico-item strong {
+    flex-shrink: 0;
+    color: #19986c;
+}
+
+
+/* ==========================================================
+   25. RANKING
+========================================================== */
+
+.ranking {
+    display: grid;
+    gap: 12px;
+}
+
+.ranking-item {
+    display: grid;
+    grid-template-columns: 55px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+    border: 1px solid var(--borda);
+
+    background: white;
+}
+
+.ranking-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-suave);
+}
+
+.ranking-item.voce,
+.ranking-item.primeiro {
+    border: 2px solid var(--verde);
+    background: #f4fffa;
 }
 
 .ranking-item strong {
-    text-align: right;
+    color: #128968;
+    font-variant-numeric: tabular-nums;
 }
 
-.primeiro {
-    border: 2px solid #20a87a;
+.posicao {
+    font-size: 25px;
+}
+
+.aviso-ranking {
+    color: var(--cinza);
+    font-size: 12px;
+    line-height: 1.6;
 }
 
 
-/* NOTIFICAÇÃO */
+/* ==========================================================
+   26. CONQUISTAS
+========================================================== */
+
+.conquistas {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.conquista {
+    padding: 23px;
+
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+
+    background: white;
+}
+
+.conquista:not(.bloqueada):hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra);
+}
+
+.conquista.bloqueada {
+    opacity: .55;
+    filter: grayscale(.8);
+}
+
+.conquista .icone {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.conquista h3 {
+    margin-bottom: 6px;
+}
+
+.conquista p {
+    color: var(--cinza);
+    font-size: 13px;
+}
+
+.conquista small {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #148a68;
+    font-weight: 900;
+}
+
+
+/* ==========================================================
+   27. LOJA LEGADA
+========================================================== */
+
+.loja {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.produto {
+    min-width: 0;
+    padding: 26px 18px;
+    text-align: center;
+}
+
+.produto-imagem {
+    display: grid;
+    place-items: center;
+
+    min-height: 115px;
+    margin-bottom: 15px;
+
+    border-radius: 18px;
+
+    background: #f0faf5;
+    font-size: 64px;
+}
+
+.produto p {
+    margin: 10px 0 18px;
+}
+
+.produto button {
+    width: 100%;
+}
+
+.produto button.equipado {
+    background: var(--escuro);
+}
+
+.preco-produto,
+.saldo-loja {
+    color: var(--verde-escuro);
+    font-weight: 900;
+}
+
+.inventario {
+    padding: 22px;
+}
+
+.inventario-itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.inventario-item,
+.item-inventario {
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background: #e8f8ef;
+
+    color: #176d52;
+    font-weight: 800;
+}
+
+
+/* ==========================================================
+   28. NOTIFICAÇÕES
+========================================================== */
 
 .notificacao {
     position: fixed;
-    bottom: 25px;
     right: 25px;
-    background: #164e63;
+    bottom: 25px;
+
+    z-index: 9999;
+
+    width: max-content;
+    max-width: min(440px, calc(100vw - 40px));
+
+    padding: 15px 21px;
+
+    border-radius: 15px;
+
     color: white;
-    padding: 15px 22px;
-    border-radius: 12px;
+    background: var(--escuro);
+
+    box-shadow:
+        0 15px 40px rgba(16, 47, 57, .2);
+
+    font-weight: 800;
+    line-height: 1.5;
+
     opacity: 0;
+    visibility: hidden;
+
     transform: translateY(20px);
-    transition: 0.3s;
+
     pointer-events: none;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease,
+        visibility .3s ease;
 }
 
 .notificacao.mostrar {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
 }
 
+.notificacao.sucesso {
+    background: #176e53;
+}
 
-/* ANIMAÇÃO */
+.notificacao.erro {
+    background: #a73e4c;
+}
 
-.pet-area .pet {
-    animation: flutuar 2s infinite ease-in-out;
+
+/* ==========================================================
+   29. ESTADOS DE SALVAMENTO
+========================================================== */
+
+.salvamento {
+    color: #168668;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.salvamento.erro {
+    color: #c03949;
+}
+
+.erro-inicializacao {
+    padding: 14px;
+
+    border: 1px solid #f1c5cc;
+    border-radius: 12px;
+
+    color: #a73e4c;
+    background: #fff0f2;
+}
+
+
+/* ==========================================================
+   30. RODAPÉ
+========================================================== */
+
+.rodape {
+    padding: 25px 15px;
+
+    color: #879d9a;
+
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/* ==========================================================
+   31. ANIMAÇÕES
+========================================================== */
+
+@keyframes entradaTela {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes flutuar {
-    0%, 100% {
+    0%,
+    100% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-9px);
+    }
+}
+
+@keyframes comemorar {
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+
+    25% {
+        transform: translateY(-18px) rotate(-8deg);
+    }
+
+    50% {
+        transform: translateY(-22px) rotate(0);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(8deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes flutuarDecoracao {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes aparecerSuave {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 
 
-/* RESPONSIVIDADE */
+/* ==========================================================
+   32. TELAS MÉDIAS
+========================================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
+    .grade-principal {
+        grid-template-columns: 1fr;
+    }
+
+    .inicio-texto h1 {
+        font-size: clamp(36px, 5vw, 54px);
+    }
+
+    .resumo-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ==========================================================
+   33. TABLETS
+========================================================== */
+
+@media (max-width: 800px) {
+    .tela {
+        padding: 22px 16px;
+    }
 
     .acoes {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
     }
 
     .menu {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
     .loja {
@@ -598,19 +1933,242 @@ header {
     }
 
     .estatisticas {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
-    header {
+    .topo,
+    .inicio-topo {
+        gap: 14px;
+    }
+
+    .cabecalho-pagina {
+        align-items: flex-start;
+    }
+}
+
+
+/* ==========================================================
+   34. CELULARES
+========================================================== */
+
+@media (max-width: 560px) {
+    .tela {
+        padding: 18px 12px;
+    }
+
+    .topo,
+    .cabecalho {
+        flex-direction: column;
         align-items: flex-start;
     }
 
-    .pet-grande {
-        width: 180px;
-        height: 180px;
+    .inicio-topo {
+        flex-wrap: wrap;
     }
 
-    .inicio-card h1 {
-        font-size: 35px;
+    .logo,
+    .marca {
+        font-size: 25px;
+    }
+
+    .inicio-texto h1 {
+        font-size: clamp(34px, 9vw, 46px);
+    }
+
+    .inicio-beneficios {
+        gap: 7px;
+    }
+
+    .inicio-beneficios > * {
+        font-size: 11px;
+    }
+
+    .area-pet,
+    .status-card,
+    .bloco,
+    .conteudo-card {
+        padding: 18px;
+    }
+
+    .criador {
+        padding: 25px 18px;
+    }
+
+    .acoes {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .acoes button {
+        min-height: 112px;
+        padding: 14px 8px;
+    }
+
+    .menu {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .conquistas {
+        grid-template-columns: 1fr;
+    }
+
+    .resumo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .habito {
+        flex-wrap: wrap;
+    }
+
+    .habito button {
+        width: 100%;
+    }
+
+    .ranking-item {
+        grid-template-columns:
+            38px minmax(0, 1fr) auto;
+
+        padding: 14px;
+        gap: 8px;
+    }
+
+    .ranking-item strong {
+        font-size: 12px;
+    }
+
+    .historico-item {
+        align-items: flex-start;
+    }
+
+    .historico-item span {
+        font-size: 12px;
+    }
+
+    .historico-item strong {
+        font-size: 12px;
+    }
+
+    .notificacao {
+        left: 12px;
+        right: 12px;
+        bottom: 14px;
+
+        width: auto;
+        max-width: none;
+
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .evolucao-card {
+        padding: 30px 18px;
+    }
+
+    .recursos {
+        gap: 6px;
+    }
+
+    .recursos > span,
+    .pill {
+        padding: 8px 10px;
+        font-size: 12px;
     }
 }
+
+
+/* ==========================================================
+   35. TELAS MUITO PEQUENAS
+========================================================== */
+
+@media (max-width: 360px) {
+    .tela {
+        padding: 14px 9px;
+    }
+
+    .acoes {
+        gap: 8px;
+    }
+
+    .acoes strong {
+        font-size: 12px;
+    }
+
+    .menu {
+        gap: 8px;
+    }
+
+    .menu button {
+        padding: 13px 7px;
+    }
+
+    .estatistica {
+        padding: 18px 8px;
+    }
+
+    .estatistica strong {
+        font-size: 27px;
+    }
+
+    .pet-grande {
+        width: 170px;
+        height: 170px;
+    }
+}
+
+
+/* ==========================================================
+   36. DISPOSITIVOS COM MOUSE
+========================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-principal:hover {
+        filter: brightness(1.02);
+    }
+
+    .habito button:hover {
+        box-shadow:
+            0 8px 16px rgba(18, 170, 124, .16);
+    }
+}
+
+
+/* ==========================================================
+   37. ACESSIBILIDADE — MOVIMENTO REDUZIDO
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ==========================================================
+   38. CONTRASTE E NAVEGAÇÃO POR TECLADO
+========================================================== */
+
+@media (forced-colors: active) {
+    button,
+    .painel,
+    .ranking-item,
+    .conquista {
+        border: 1px solid CanvasText;
+    }
+
+    .barra > div,
+    .barra-preenchida {
+        background: Highlight;
+    }
+}
+
+
+/* ==========================================================
+   FIM DO STYLE.CSS — VITAPET EXPOTEC
+========================================================== */
